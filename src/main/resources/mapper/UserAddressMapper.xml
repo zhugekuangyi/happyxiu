@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.UserAddressMapper">
+ 
+  <select id="listByUserId" parameterType="String" resultType="com.mingsheng.model.UserAddress">
+    select * from useraddress where userId=#{userId};
+  </select>
+
+
+  <update id="updateDef" parameterType="String">
+    update useraddress set def=#{def} where id=#{id}
+  </update>
+
+  <select id="getById" parameterType="String" resultType="com.mingsheng.model.UserAddress">
+    SELECT * from useraddress where id=#{id}
+  </select>
+
+  <delete id="delete" parameterType="String">
+    DELETE  FROM useraddress where id=#{id}
+  </delete>
+
+  <select id="getDefaultAddr" parameterType="String" resultType="com.mingsheng.model.UserAddress">
+    SELECT * FROM useraddress where userId=#{userId} and def=1
+  </select>
+
+
+  <insert id="saveUser">
+    INSERT INTO user(`id`,
+    `phone`,
+    `password`,
+    `ctime`,
+    `isDel`,
+    `sex`,
+    `nickname`)
+    VALUES
+    (#{userId},
+    #{phone},
+    #{password},
+    #{ctime},
+     0,
+     0,
+    #{nickname});
+
+  </insert>
+</mapper>
