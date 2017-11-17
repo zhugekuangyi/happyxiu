@@ -25,8 +25,16 @@
 
 
   <update id="update">
-
+    update useraddress set name=#{name},phone=#{phone},address=#{address} where id=#{id}
   </update>
+
+  <insert id="add">
+    INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,0)
+  </insert>
+
+  <insert id="addDefault">
+      INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,1)
+  </insert>
 
   <insert id="saveUser">
     INSERT INTO user(`id`,

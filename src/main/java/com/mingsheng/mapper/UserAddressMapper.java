@@ -20,4 +20,8 @@ public interface UserAddressMapper {
     UserAddress getDefaultAddr(@Param(value = "userId") String userId);
 
     void update(UserAddress userAddress);
+
+    void add(UserAddress userAddress);
+
+    void addDefault(UserAddress userAddress);
 }

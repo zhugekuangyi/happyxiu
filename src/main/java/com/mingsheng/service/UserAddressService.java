@@ -2,6 +2,7 @@ package com.mingsheng.service;
 
 import com.mingsheng.mapper.UserAddressMapper;
 import com.mingsheng.model.UserAddress;
+import com.mingsheng.utils.MyUUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,16 @@ public class UserAddressService {
 
             if(userAddress.getId()!="" && userAddress.getId()!=null){
                 userAddressMapper.update(userAddress);
+            }else {
+                List<UserAddress> userAddresses = userAddressMapper.listByUserId(userAddress.getUserId());
+                userAddress.setId(MyUUID.getUUID());
+                if(userAddresses!=null && userAddresses.size()>0){
+                    userAddressMapper.add(userAddress);
+                }else {
+                    userAddressMapper.addDefault(userAddress);
+                }
+
+
             }
     }
 }
