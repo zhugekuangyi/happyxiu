@@ -18,4 +18,6 @@ public interface UserAddressMapper {
     void delete(@Param(value = "id") String addId);
 
     UserAddress getDefaultAddr(@Param(value = "userId") String userId);
+
+    void update(UserAddress userAddress);
 }

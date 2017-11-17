@@ -24,6 +24,10 @@
   </select>
 
 
+  <update id="update">
+
+  </update>
+
   <insert id="saveUser">
     INSERT INTO user(`id`,
     `phone`,

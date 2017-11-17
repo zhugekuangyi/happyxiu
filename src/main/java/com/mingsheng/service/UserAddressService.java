@@ -48,4 +48,11 @@ public class UserAddressService {
             UserAddress address =  userAddressMapper.getDefaultAddr(userId);
             return address;
         }
+
+    public void saveOrupdateAdd(UserAddress userAddress) {
+
+            if(userAddress.getId()!="" && userAddress.getId()!=null){
+                userAddressMapper.update(userAddress);
+            }
+    }
 }

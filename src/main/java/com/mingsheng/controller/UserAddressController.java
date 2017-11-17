@@ -144,7 +144,12 @@ public class UserAddressController {
 
             UserAddress userAddress = new UserAddress();
 
-//            userAddress.set
+            userAddress.setId(addId);
+            userAddress.setAddress(address);
+            userAddress.setName(name);
+            userAddress.setPhone(phone);
+            userAddress.setUserId(TokenUtil.getId(token));
+            userAddressService.saveOrupdateAdd(userAddress);
 
 
         }catch (Exception e) {
