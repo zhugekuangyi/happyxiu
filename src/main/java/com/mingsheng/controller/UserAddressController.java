@@ -125,4 +125,34 @@ public class UserAddressController {
     }
 
 
+    @RequestMapping(value = "/saveOrUpdateAddr", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject saveOrupdateAdd(String token ,String name,String phone,String address,String addId){
+        try {
+            if (token == null || token.trim().length() <= 0) {
+                return RespStatus.fail("token不能为空");
+            }
+            if (name == null || name.trim().length() <= 0) {
+                return RespStatus.fail("name不能为空");
+            }
+            if (phone == null || phone.trim().length() <= 0) {
+                return RespStatus.fail("phone不能为空");
+            }
+            if(address ==null || address.trim().length()<=0){
+                return RespStatus.fail("地址不能为空");
+            }
+
+            UserAddress userAddress = new UserAddress();
+
+//            userAddress.set
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return  RespStatus.fail();
+        }
+
+        return null;
+    }
+
 }
