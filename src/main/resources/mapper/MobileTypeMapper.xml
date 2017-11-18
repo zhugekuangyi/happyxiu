@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.MobileTypeMapper">
+
+  <select id="getList"  resultType="com.mingsheng.model.MobileType">
+    SELECT * from mobileType where levei=1 ORDER by ctime ASC;
+  </select>
+
+
+  <select id="getListByPid"  parameterType="String" resultType="com.mingsheng.model.MobileType">
+    SELECT * from mobileType where  pid=#{id};
+  </select>
+  
+
+</mapper>
