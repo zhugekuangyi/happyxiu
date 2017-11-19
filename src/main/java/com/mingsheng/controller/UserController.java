@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Random;
 
 @Controller
@@ -36,7 +35,7 @@ public class UserController {
             if(phone ==null|| phone.trim().length()<=0){
                 return RespStatus.fail("手机号不能为空");
             }
-            User user = userService.getUserByPhone(Integer.parseInt(phone));
+            User user = userService.getUserByPhone(phone);
             if(user!=null){
                 return RespStatus.fail("该用户已注册，请登录");
             }
@@ -71,7 +70,7 @@ public class UserController {
                 if (phone.trim().length() != 11) {
                     return RespStatus.fail("手机号码格式错误！");
                 } else {
-                    User user = userService.getUserByPhone(Integer.parseInt(phone));
+                    User user = userService.getUserByPhone(phone);
                     if (user != null) {
                         return RespStatus.fail("此手机号码已注册！");
                     }
@@ -100,7 +99,7 @@ public class UserController {
             if (pwd == null || pwd == "") {
                 pwd = phone.substring(5);
             }
-            Integer count = userService.savaUser(uuid, Integer.parseInt(phone), pwd, time, phone1 + "****" + phone2);
+            Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2);
             if(count>=1){
                 return RespStatus.success().element("token", TokenUtil.getToken(uuid));
             }else {
@@ -131,7 +130,7 @@ public class UserController {
         if(password==null || password.trim().length()<=0){
             return RespStatus.fail("密码不能为空");
         }
-        User user = userService.getUserByPhone(Integer.parseInt(phone));
+        User user = userService.getUserByPhone(phone);
         if(user==null){
             return RespStatus.fail("您还没注册，请注册！");
         }
@@ -199,7 +198,7 @@ public class UserController {
 //            }else {
 //                RedisUtil.getRu().del("reg" + phone);
 //            }
-              User user = userService.getUserByPhone(Integer.parseInt(phone));
+              User user = userService.getUserByPhone(phone);
               if (user != null) {
                  return RespStatus.success().element("token",TokenUtil.getToken(user.getId()));
                }else {
@@ -208,7 +207,7 @@ public class UserController {
                   String phone1 = phone.substring(0, 3);
                   String phone2 = phone.substring(7, 11);
                   String   pwd = phone.substring(5);
-                  Integer count = userService.savaUser(uuid, Integer.parseInt(phone), pwd, time, phone1 + "****" + phone2);
+                  Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2);
                   if(count>=1){
                       return RespStatus.success().element("token", TokenUtil.getToken(uuid));
                   }else {
