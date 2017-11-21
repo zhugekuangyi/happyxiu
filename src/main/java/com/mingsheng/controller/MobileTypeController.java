@@ -48,4 +48,24 @@ public class MobileTypeController {
 
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "getListByMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getListByMobile(String token,String mmobileId){
+
+        List<MobileType> mobileTypeList = null;
+        try {
+            if(token==null || token.trim().length()<=0){
+                return RespStatus.fail("token不能为空");
+            }
+           mobileTypeList = mobileTypeService.getListByPid(mmobileId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.exception();
+        }
+
+        return RespStatus.success().element("list",mobileTypeList);
+
+
+    }
 }
