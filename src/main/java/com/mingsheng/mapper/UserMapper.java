@@ -12,10 +12,10 @@ import java.sql.Timestamp;
  */
 @Component
 public interface UserMapper {
-    User getUserByPhone(@Param(value = "phone") Integer phone);
+    User getUserByPhone(@Param(value = "phone") String phone);
 
     Integer savaUser(@Param(value = "userId") String id,
-                     @Param(value = "phone") Integer phone,
+                     @Param(value = "phone") String phone,
                      @Param(value = "password") String pwd,
                      @Param(value = "time") Timestamp time,
                      @Param(value = "nickname") String nickName);

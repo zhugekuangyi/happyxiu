@@ -13,12 +13,12 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User getUserByPhone(Integer phone){
+    public User getUserByPhone(String phone){
         User user = userMapper.getUserByPhone(phone);
         return user;
     }
 
-    public Integer savaUser(String id, Integer phone, String pwd, Timestamp time, String nickName ){
+    public Integer savaUser(String id, String phone, String pwd, Timestamp time, String nickName ){
         Integer integer = userMapper.savaUser(id, phone, pwd, time, nickName);
         return integer;
     }
