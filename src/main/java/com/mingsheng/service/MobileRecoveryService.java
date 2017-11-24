@@ -29,10 +29,9 @@ public class MobileRecoveryService {
             }else {
                 mobileRecovery.setImg(ImgUtils.imgUrl+mr.getImg());
             }
-
-
+            list1.add(mobileRecovery);
         }
-        return list;
+        return list1;
     }
 
 
