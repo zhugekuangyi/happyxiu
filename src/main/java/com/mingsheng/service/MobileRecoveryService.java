@@ -36,6 +36,7 @@ public class MobileRecoveryService {
             }else {
                 mobileRecovery.setImg(ImgUtils.imgUrl+mr.getImg());
             }
+            mobileRecovery.setCtime(mr.getCtime());
             list1.add(mobileRecovery);
         }
         return list1;

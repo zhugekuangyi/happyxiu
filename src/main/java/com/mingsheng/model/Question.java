@@ -6,9 +6,9 @@ public class Question {
 
     private String id;
 
-    private String descripation;
+    private String description;
 
-    private Timestamp time;
+    private Timestamp ctime;
 
     private Integer isDel;
 
@@ -34,20 +34,20 @@ public class Question {
         this.id = id;
     }
 
-    public String getDescripation() {
-        return descripation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripation(String descripation) {
-        this.descripation = descripation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public Timestamp getCtime() {
+        return ctime;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setCtime(Timestamp ctime) {
+        this.ctime = ctime;
     }
 
     public Integer getIsDel() {

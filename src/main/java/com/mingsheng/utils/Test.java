@@ -9,5 +9,7 @@ public class Test {
         System.out.println(MyUUID.getUUID());
 
         System.out.println(new Timestamp(System.currentTimeMillis()));
+
+        System.out.println(TokenUtil.getToken("1DBrheya"));
     }
 }

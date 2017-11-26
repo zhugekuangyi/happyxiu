@@ -46,11 +46,12 @@ public class MobileRecoveryController {
         List list = null;
         try {
             list = mobileRecoveryService.getList();
+            return RespStatus.success().element("list",list);
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.fail("获取回收列表失败");
         }
-        return RespStatus.success().element("list",list);
+
     }
 
 
@@ -118,19 +119,19 @@ public class MobileRecoveryController {
 
     @RequestMapping(value = "/getPrice", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject getPrice(HttpServletRequest request,String pid,String id){
+    public JSONObject getPrice(HttpServletRequest request,String mobileType,String mobileName){
         MobileRecovery recovery=null;
 
         try {
-            if(pid==null || pid.length()<=0){
+            if(mobileType==null || mobileType.length()<=0){
                 return RespStatus.fail("mobileType不能为空");
             }
 
-            if(id==null || pid.length()<=0){
+            if(mobileName==null || mobileName.length()<=0){
                 return RespStatus.fail("mobileName不能为空");
             }
 
-            recovery = mobileRecoveryService.getInfo(pid,id);
+            recovery = mobileRecoveryService.getInfo(mobileType,mobileName);
 
         } catch (Exception e) {
             e.printStackTrace();

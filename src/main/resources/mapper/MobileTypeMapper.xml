@@ -3,16 +3,16 @@
 <mapper namespace="com.mingsheng.mapper.MobileTypeMapper">
 
   <select id="getList"  resultType="com.mingsheng.model.MobileType">
-    SELECT * from mobileType where levei=1 and status = #{status}ORDER by ctime ASC;
+    SELECT * from mobiletype where levei=1 and status = #{status} ORDER by ctime ASC;
   </select>
 
 
   <select id="getListByPid"  parameterType="String" resultType="com.mingsheng.model.MobileType">
-    SELECT * from mobileType where  pid=#{id};
+    SELECT * from mobiletype where  pid=#{id};
   </select>
   
 
   <select id="getInfoById" parameterType="String" resultType="com.mingsheng.model.MobileType">
-    SELECT * from mobileType where id=#{id}
+    SELECT * from mobiletype where id=#{id}
   </select>
 </mapper>
