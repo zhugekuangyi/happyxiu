@@ -21,6 +21,10 @@ public class MobileTypeController {
     private MobileTypeService mobileTypeService;
 
 
+    /**
+     * 获取手机类型
+      * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getList(Integer status){
