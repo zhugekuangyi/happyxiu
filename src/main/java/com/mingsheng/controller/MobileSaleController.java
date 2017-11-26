@@ -56,7 +56,7 @@ public class MobileSaleController {
                 return RespStatus.fail("token不能为空");
             }
             if(mobileId ==null || mobileId.length()<=0){
-                return RespStatus.fail("回收的手机型号不能为空");
+                return RespStatus.fail("出售的手机型号不能为空");
             }
             if(status==null){
                 return RespStatus.fail("请填写送货方式");
@@ -86,8 +86,8 @@ public class MobileSaleController {
             MobileType mobileType = mobileTypeService.getInfoById(mobileSale.getMobileType());
             order.setMobileName(mobileName.getName());
             order.setMobileType(mobileType.getName());
-            MobileType mobileMemory = mobileTypeService.getInfoById(mobileSale.getMemory());
-            MobileType mobileColour = mobileTypeService.getInfoById(mobileSale.getColour());
+            MobileType mobileMemory = mobileTypeService.getInfoById(mobileSale.getMobileMemory());
+            MobileType mobileColour = mobileTypeService.getInfoById(mobileSale.getMobileColour());
             order.setMobileColour(mobileColour.getName());
             order.setMobileMemory(mobileMemory.getName());
             order.setOrderNo(StringUtil.getOrderNum());

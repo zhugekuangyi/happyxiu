@@ -25,20 +25,21 @@ public class MobileSaleService {
         for (MobileSale ms:list) {
             MobileSale mobileSale = new MobileSale();
             mobileSale.setId(ms.getId());
-            MobileType mobileType = mobileTypeMapper.getInfoById(mobileSale.getMobileType());
-            MobileType mobileName = mobileTypeMapper.getInfoById(mobileSale.getMobileName());
+            MobileType mobileType = mobileTypeMapper.getInfoById(ms.getMobileType());
+            MobileType mobileName = mobileTypeMapper.getInfoById(ms.getMobileName());
             mobileSale.setMobileName(mobileName.getName());
             mobileSale.setMobileType(mobileType.getName());
-            MobileType mobileMemory = mobileTypeMapper.getInfoById(mobileSale.getMemory());
-            mobileSale.setMemory(mobileMemory.getName());
-            MobileType mobileColour = mobileTypeMapper.getInfoById(mobileSale.getColour());
-            mobileSale.setColour(mobileColour.getName());
-            mobileSale.setPrice(mobileSale.getPrice());
+            MobileType mobileMemory = mobileTypeMapper.getInfoById(ms.getMobileMemory());
+            mobileSale.setMobileMemory(mobileMemory.getName());
+            MobileType mobileColour = mobileTypeMapper.getInfoById(ms.getMobileColour());
+            mobileSale.setMobileColour(mobileColour.getName());
+            mobileSale.setPrice(ms.getPrice());
             if(mobileSale.getImg()==null || mobileSale.getImg().length()<=0){
                 mobileSale.setImg(ImgUtils.defaultUrl);
             }else {
                 mobileSale.setImg(ImgUtils.imgUrl+mobileSale.getImg());
             }
+            mobileSale.setCtime(ms.getCtime());
             list1.add(mobileSale);
         }
         return list1;

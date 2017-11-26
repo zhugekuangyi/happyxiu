@@ -16,9 +16,9 @@ public class MobileSale {
 
     private Double price;
 
-    private String memory;
+    private String mobileMemory;
 
-    private String colour;
+    private String mobileColour;
 
     public String getId() {
         return id;
@@ -68,19 +68,19 @@ public class MobileSale {
         this.price = price;
     }
 
-    public String getMemory() {
-        return memory;
+    public String getMobileMemory() {
+        return mobileMemory;
     }
 
-    public void setMemory(String memory) {
-        this.memory = memory;
+    public void setMobileMemory(String mobileMemory) {
+        this.mobileMemory = mobileMemory;
     }
 
-    public String getColour() {
-        return colour;
+    public String getMobileColour() {
+        return mobileColour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
+    public void setMobileColour(String mobileColour) {
+        this.mobileColour = mobileColour;
     }
 }
