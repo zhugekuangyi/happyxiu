@@ -65,14 +65,17 @@ public class UserAddressController {
     }
 
     /**
-     * 删除地址
+     * d
      * @param addrId
      * @return
      */
     @RequestMapping(value = "/delAddr", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject delAddr(String addrId) {
+    public JSONObject delAddr(String addrId,String token) {
         try {
+            if(token ==null || token.length()<=0){
+                return RespStatus.fail("token不能为空");
+            }
             if (addrId == null || addrId.trim().length() <= 0) {
                 return RespStatus.fail("地址addrId不能为空");
             }
