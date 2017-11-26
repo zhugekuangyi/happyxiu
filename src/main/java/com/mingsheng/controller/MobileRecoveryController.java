@@ -96,6 +96,7 @@ public class MobileRecoveryController {
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
             order.setPhone(userAddress.getPhone());
+            order.setPrice(recovery.getPrice());
             order.setUserId(user.getId());
             if(remark==null || remark.length()<=0){
                 order.setRemark("");

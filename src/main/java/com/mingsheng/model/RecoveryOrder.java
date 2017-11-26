@@ -24,7 +24,17 @@ public class RecoveryOrder {
 
     private String mobileName;
 
+    private Double price;
+
     private String name;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public String getId() {
         return id;

@@ -1,7 +1,7 @@
 package com.mingsheng.service;
 
-import com.mingsheng.mapper.RecoveryOrderMapper;
-import com.mingsheng.model.RecoveryOrder;
+import com.mingsheng.mapper.SaleOrderMapper;
+import com.mingsheng.model.SaleOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 public class SaleOrderService {
 
     @Autowired
-    private RecoveryOrderMapper recoveryOrderMapper;
+    private SaleOrderMapper mapper;
 
 
-    public void insert(RecoveryOrder order){
-        recoveryOrderMapper.addOrder(order);
+    public void insert(SaleOrder order){
+        mapper.addOrder(order);
     }
 }
