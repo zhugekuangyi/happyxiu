@@ -14,4 +14,5 @@ public interface MobileTypeMapper {
     List<MobileType>getListByPid(@Param(value = "id") String id);
 
     MobileType getInfoById(@Param(value = "id") String id);
+
 }

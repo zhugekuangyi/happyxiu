@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.SaleOrderMapper">
+
+ 
+  
+  <insert id="addOrder">
+    INSERT INTO `saleorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`, `mobileMemory`, `mobileColour`, `price`, `name`)
+VALUES
+	(#{id}, #{orderNo}, #{userId},#{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileMemory}, #{mobileColour}, #{price}, #{name});
+
+
+  </insert>
+
+</mapper>

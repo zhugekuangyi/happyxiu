@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.QuestionOrderMapper">
+
+ <insert id="insert" parameterType="com.mingsheng.model.QuestionOrder">
+
+   INSERT INTO `questionorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`, `mobileMemory`, `mobileColour`, `price`, `name`, `questionId`, `questionResult`)
+   VALUES
+	(#{id}, #{orderNo}, #{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileMemory}, #{mobileColour}, #{price}, #{name}, #{questionId}, #{questionResult});
+
+ </insert>
+</mapper>

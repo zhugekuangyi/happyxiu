@@ -28,4 +28,5 @@ public class MobileTypeService {
 
         return mobileTypeMapper.getInfoById(id);
     }
+
 }
