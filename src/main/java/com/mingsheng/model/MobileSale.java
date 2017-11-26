@@ -2,7 +2,7 @@ package com.mingsheng.model;
 
 import java.sql.Timestamp;
 
-public class MobileRecovery {
+public class MobileSale {
 
     private String id;
 
@@ -16,6 +16,9 @@ public class MobileRecovery {
 
     private Double price;
 
+    private String memory;
+
+    private String colour;
 
     public String getId() {
         return id;
@@ -63,5 +66,21 @@ public class MobileRecovery {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getMemory() {
+        return memory;
+    }
+
+    public void setMemory(String memory) {
+        this.memory = memory;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 }

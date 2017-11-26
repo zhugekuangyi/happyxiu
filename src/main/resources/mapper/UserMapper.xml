@@ -25,4 +25,9 @@
     #{nickname});
 
   </insert>
+
+
+  <select id="getUserById" parameterType="String" resultType="com.mingsheng.model.User">
+    SELECT * FROM  user where id=#{userId};
+  </select>
 </mapper>

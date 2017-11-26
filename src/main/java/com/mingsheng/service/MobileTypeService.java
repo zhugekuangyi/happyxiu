@@ -12,14 +12,20 @@ public class MobileTypeService {
     @Autowired
     private MobileTypeMapper mobileTypeMapper;
 
-    public List<MobileType> getList(){
+    public List<MobileType> getList(Integer status){
 
-        return mobileTypeMapper.getList();
+        return mobileTypeMapper.getList(status);
 
     }
 
 
     public List<MobileType> getListByPid(String id){
         return mobileTypeMapper.getListByPid(id);
+    }
+
+
+    public MobileType getInfoById(String id){
+
+        return mobileTypeMapper.getInfoById(id);
     }
 }

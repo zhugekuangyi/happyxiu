@@ -22,4 +22,10 @@ public class UserService {
         Integer integer = userMapper.savaUser(id, phone, pwd, time, nickName);
         return integer;
     }
+
+    public User getUserById(String id){
+        User user = userMapper.getUserById(id);
+
+        return user;
+    }
 }

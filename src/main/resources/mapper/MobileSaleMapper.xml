@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.MobileSaleMapper">
+ 
+  <select id="getList" resultType="com.mingsheng.model.MobileSale">
+    SELECT * from mobileSale order BY  ctime DESC limit 10;
+  </select>
+
+
+  <select id="getInfo" parameterType="String" resultType="com.mingsheng.model.MobileSale">
+    SELECT * FROM mobileSale where mobileType=#{mobileType} and mobileName=#{mobileName} and mobileMemory=#{mobileMemory} and mobileColour=#{mobileColour}
+  </select>
+
+  <select id="getInfoById" parameterType="String" resultType="com.mingsheng.model.MobileSale">
+    SELECT * from mobileSale where id=#{id}
+   </select>
+
+</mapper>

@@ -5,6 +5,14 @@
   <select id="getList" resultType="com.mingsheng.model.MobileRecovery">
     SELECT * from mobileRecovery order BY  ctime DESC limit 10;
   </select>
- 
+
+
+  <select id="getInfo" parameterType="String" resultType="com.mingsheng.model.MobileRecovery">
+    SELECT * FROM mobileRecovery where mobileType=#{mobileType} and mobileName=#{mobileName}
+  </select>
+
+  <select id="getInfoById" parameterType="String" resultType="com.mingsheng.model.MobileRecovery">
+    SELECT * from mobileRecovery where id=#{id}
+   </select>
 
 </mapper>

@@ -23,16 +23,16 @@ public class MobileTypeController {
 
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getList(String token){
+    public JSONObject getList(Integer status){
 
         List<MobileType> list = null;
         List<MobileType> listByPid;
         try {
-            if(token==null || token.trim().length()<=0){
-                return RespStatus.fail("token不能为空");
-            }
+          if(status ==null){
+              return RespStatus.fail("查询状态不能为空");
+          }
 
-            list = mobileTypeService.getList();
+            list = mobileTypeService.getList(status);
             if(list.size()>0){
                 listByPid = mobileTypeService.getListByPid(list.get(0).getId());
 

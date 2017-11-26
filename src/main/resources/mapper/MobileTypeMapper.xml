@@ -3,7 +3,7 @@
 <mapper namespace="com.mingsheng.mapper.MobileTypeMapper">
 
   <select id="getList"  resultType="com.mingsheng.model.MobileType">
-    SELECT * from mobileType where levei=1 ORDER by ctime ASC;
+    SELECT * from mobileType where levei=1 and status = #{status}ORDER by ctime ASC;
   </select>
 
 
@@ -12,4 +12,7 @@
   </select>
   
 
+  <select id="getInfoById" parameterType="String" resultType="com.mingsheng.model.MobileType">
+    SELECT * from mobileType where id=#{id}
+  </select>
 </mapper>

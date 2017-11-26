@@ -9,7 +9,9 @@ import java.util.List;
 @Component
 public interface MobileTypeMapper {
 
-    List<MobileType> getList();
+    List<MobileType> getList(@Param(value = "status") Integer status);
 
     List<MobileType>getListByPid(@Param(value = "id") String id);
+
+    MobileType getInfoById(@Param(value = "id") String id);
 }
