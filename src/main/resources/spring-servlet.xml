@@ -108,4 +108,7 @@
     <mvc:annotation-driven/>
 
 
+    <mvc:interceptors>
+        <bean class="com.mingsheng.filter.SystemInterceptor"/>
+    </mvc:interceptors>
 </beans>
