@@ -16,5 +16,7 @@ public class CommController {
         if(token==null || token.length()<=0){
             return RespStatus.fail("token不能为空");
         }
+        return null;
     }
+
 }

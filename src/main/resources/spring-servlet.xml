@@ -107,6 +107,7 @@
     <!-- 代替下面的两行代码 -->
     <mvc:annotation-driven/>
 
+    <mvc:default-servlet-handler />
 
     <mvc:interceptors>
         <bean class="com.mingsheng.filter.SystemInterceptor"/>
