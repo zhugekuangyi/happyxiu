@@ -26,8 +26,8 @@
 <input type="hidden" id="TenantId" name="TenantId" value="" />
 <div class="header"></div>
 <div class="loginWraper">
-  <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" action="index.html" method="post">
+  <div class="loginBox">
+    <form class="form form-horizontal"  method="post" id="loginform">
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-xs-8">
@@ -42,8 +42,8 @@
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <input name="login" type="button" id="loginBtn" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-          <input name="reset" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+          <input name="login" id ="loginBtn" type="button"  class="btn btn-success radius size-L" value="登录"/>
+          <!--<input name="reset" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">-->
         </div>
       </div>
     </form>
@@ -53,51 +53,32 @@
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
 <script>
-//    $(document).ready(function () {
-//        $("#loginBtn").on("click",
-//            function () {
-//                login();
-//            });
-//    }); //ready事件结束
-//
-//    function login() {
-//        $("#loginBtn").ajaxSubmit({
-//            type: 'post',
-//            url: 'sys_user/login',
-//            success: function (json) {
-//                if (json.return_code == 0) {
-//                    window.location.href = "index.html";
-//                } else {
-//                    alert(json.return_msg);
-//                }
-//            },
-//            error: function (XmlHttpRequest, textStatus, errorThrown) {
-//                alert("登录异常！");
-//            }
-//        });
-//    }
 
-    $("#loginBtn").click(function () {
+    $(document).ready(function () {
+        $("#loginBtn").on("click",
+            function () {
+                login();
+            });
+    }); //ready事件结束
+
+    function login() {
+        var formParam = $("#loginform").serialize();
+        console.log(formParam);
         $.ajax({
-            type: 'post',
-            data :{
-                name : $('name').value,
-                              : $('.password').val()
-            },
-            dataType :"json",
-            url :'http://localhost:8080/sys_user/login',
-            success: function (data) {
-                console.log(data)
-                if (data.return_code == 0) {
-                    window.location.href = "index.html";
-                } else {
-                    alert(json.return_msg);
-                }
-            },
-        })
-    })
-
-
+            type:'post',
+            url:'http://localhost:8080/sys_user/login',
+            data:formParam,
+            cache:false,
+            dataType:'json',
+            success:function(data){
+              if(data.return_code==0){
+                  window.location.href="/pages/index.html";
+              }else {
+                  alert(data.return_msg);
+              }
+            }
+        });
+    }
 </script>
 </body>
 </html>
