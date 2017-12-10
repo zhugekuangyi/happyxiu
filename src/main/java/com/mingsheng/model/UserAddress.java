@@ -8,6 +8,7 @@ public class UserAddress {
     private String name; //收货人名字
     private String phone; //收货人手机号码
 
+    private String area;
     private String address;
 
     private Integer isDel;
@@ -16,6 +17,14 @@ public class UserAddress {
 
     public Integer getDef() {
         return def;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public void setDef(Integer def) {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mingsheng.mapper.StoreAddressMapper">
+
+  <select id="list" resultType="com.mingsheng.model.StoreAddress">
+    SELECT * from storeAddress order by ctime DESC
+  </select>
+
+
+  <insert id="insert" parameterType="String">
+    insert into storeAddress(id,address,img,remark,ctime)VALUES (#{id},#{address},#{img},#{remark},#{ctime});
+  </insert>
+
+  <select id="getStoreAddress" resultType="com.mingsheng.model.StoreAddress">
+    select * from storeAddress;
+  </select>
+</mapper>

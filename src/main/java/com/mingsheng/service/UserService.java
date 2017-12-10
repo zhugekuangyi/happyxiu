@@ -28,4 +28,8 @@ public class UserService {
 
         return user;
     }
+
+    public void updatePad(String phone,String password){
+        userMapper.updateByPhone(phone,password);
+    }
 }

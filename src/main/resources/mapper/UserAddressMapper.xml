@@ -29,29 +29,10 @@
   </update>
 
   <insert id="add">
-    INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,0)
+    INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def,area)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,0,#{area})
   </insert>
 
   <insert id="addDefault">
-      INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,1)
-  </insert>
-
-  <insert id="saveUser">
-    INSERT INTO user(`id`,
-    `phone`,
-    `password`,
-    `ctime`,
-    `isDel`,
-    `sex`,
-    `nickname`)
-    VALUES
-    (#{userId},
-    #{phone},
-    #{password},
-    #{ctime},
-     0,
-     0,
-    #{nickname});
-
+      INSERT  INTO useraddress(id,userId,name,phone,address,isdel,def,area)VALUE (#{id},#{userId},#{name},#{phone},#{address},0,1,#{area})
   </insert>
 </mapper>

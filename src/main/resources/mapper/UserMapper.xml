@@ -30,4 +30,8 @@
   <select id="getUserById" parameterType="String" resultType="com.mingsheng.model.User">
     SELECT * FROM  user where id=#{userId};
   </select>
+
+  <update id="updateByPhone" parameterType="String">
+    update user set password=#{password} where phone=#{phone}
+  </update>
 </mapper>

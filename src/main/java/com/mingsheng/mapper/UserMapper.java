@@ -21,4 +21,6 @@ public interface UserMapper {
                      @Param(value = "nickname") String nickName);
 
     User getUserById(@Param(value = "userId") String id);
+
+    void updateByPhone(@Param(value = "phone") String phone,@Param(value = "password") String password);
 }
