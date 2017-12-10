@@ -39,7 +39,7 @@ public class CommController {
         List brandList = new ArrayList();
         List<Brand> list = brandService.getList();
         for (Brand b:list) {
-            if(b.getImg()!=null){
+            if(b.getImg()!=null || b.getImg().length()<=0){
                 brandList.add(ImgUtils.imgUrl+b.getImg());
             }else {
                 brandList.add(ImgUtils.defaultUrl);
