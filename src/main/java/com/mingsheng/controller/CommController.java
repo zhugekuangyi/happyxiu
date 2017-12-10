@@ -39,8 +39,11 @@ public class CommController {
         List brandList = new ArrayList();
         List<Brand> list = brandService.getList();
         for (Brand b:list) {
-            brandList.add(ImgUtils.imgUrl+b.getImg());
-
+            if(b.getImg()!=null){
+                brandList.add(ImgUtils.imgUrl+b.getImg());
+            }else {
+                brandList.add(ImgUtils.defaultUrl);
+            }
         }
         return RespStatus.success().element("brand",brandList);
     }
