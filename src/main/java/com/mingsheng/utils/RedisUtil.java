@@ -14,7 +14,7 @@ public class RedisUtil {
 	private static JedisPool pool = null;
 	private static RedisUtil ru = new RedisUtil();
 
-	private static final  String ip="39.106.27.66";
+	private static final  String ip="127.0.0.1";
 	private static final  Integer port=6379;
 	private static final  String pwd = "";
 

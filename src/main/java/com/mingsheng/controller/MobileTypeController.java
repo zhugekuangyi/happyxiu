@@ -53,6 +53,11 @@ public class MobileTypeController {
 
     }
 
+    /**
+     * 获取手机具体型号
+     * @param mobileId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getListByMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getListByMobile(String mobileId){
@@ -63,6 +68,58 @@ public class MobileTypeController {
                 return RespStatus.fail("token不能为空");
             }
            mobileTypeList = mobileTypeService.getListByPid(mobileId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.exception();
+        }
+
+        return RespStatus.success().element("list",mobileTypeList);
+
+
+    }
+
+
+    /**
+     * 获取手机具体型号
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getColourListByMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getColourListByMobile(String Id){
+
+        List<MobileType> mobileTypeList = null;
+        try {
+            if(Id==null || Id.trim().length()<=0){
+                return RespStatus.fail("token不能为空");
+            }
+            mobileTypeList = mobileTypeService.getListByPid(Id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.exception();
+        }
+
+        return RespStatus.success().element("list",mobileTypeList);
+
+
+    }
+
+
+    /**
+     * 获取手机内存
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMemoryListByMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getMemoryListByMobile(String Id){
+
+        List<MobileType> mobileTypeList = null;
+        try {
+            if(Id==null || Id.trim().length()<=0){
+                return RespStatus.fail("token不能为空");
+            }
+            mobileTypeList = mobileTypeService.getListByPid(Id);
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.exception();

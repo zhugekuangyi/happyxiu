@@ -1,6 +1,7 @@
 package com.mingsheng.controller;
 
 import com.mingsheng.model.User;
+import com.mingsheng.model.UserAddress;
 import com.mingsheng.service.UserAddressService;
 import com.mingsheng.service.UserService;
 import com.mingsheng.utils.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -137,7 +139,13 @@ public class UserController {
                 User userByPhone = userService.getUserByPhone(phone);
                 Map<String,Object> map = new HashMap<>();
                 map.put("nickName",userByPhone.getNickname());
-                return RespStatus.success().element("token", TokenUtil.getToken(uuid));
+                List<UserAddress> userAddresses = userAddressService.listByUserId(userByPhone.getId());
+                if(userAddresses.size()>0){
+                    map.put("addressExit",1);
+                }else {
+                    map.put("addressExit",0);
+                }
+                return RespStatus.success().element("token", TokenUtil.getToken(uuid)).element("people",map);
             }else {
                 return RespStatus.fail("注册失败");
             }
@@ -175,9 +183,16 @@ public class UserController {
         if(user==null){
             return RespStatus.fail("您还没注册，请注册！");
         }
-
         userService.updatePad(phone,password);
-        return RespStatus.success().element("token",TokenUtil.getToken(user.getId()));
+            Map<String,Object> map = new HashMap<>();
+            map.put("nickName",user.getNickname());
+            List<UserAddress> userAddresses = userAddressService.listByUserId(user.getId());
+            if(userAddresses.size()>0){
+                map.put("addressExit",1);
+            }else {
+                map.put("addressExit",0);
+            }
+        return RespStatus.success().element("token",TokenUtil.getToken(user.getId())).element("people",map);
     } catch (Exception e) {
         e.printStackTrace();
         return RespStatus.fail("请重试!");
@@ -209,7 +224,15 @@ public class UserController {
             return RespStatus.fail("您还没注册，请注册！");
         }
         if(password.equals(user.getPassword())){
-            return RespStatus.success().element("token", TokenUtil.getToken(user.getId()));
+            Map<String,Object> map = new HashMap<>();
+            map.put("nickName",user.getNickname());
+            List<UserAddress> userAddresses = userAddressService.listByUserId(user.getId());
+            if(userAddresses.size()>0){
+                map.put("addressExit",1);
+            }else {
+                map.put("addressExit",0);
+            }
+            return RespStatus.success().element("token", TokenUtil.getToken(user.getId())).element("people",map);
         }else {
             return RespStatus.fail("密码错误，请重新输入");
         }
