@@ -7,7 +7,7 @@
  </select>
 
   <delete id="del" parameterType="String">
-    DELETE form code where phone=#{phone}
+    DELETE FROM  code where phone=#{phone}
   </delete>
 
   <insert id="add" parameterType="String">

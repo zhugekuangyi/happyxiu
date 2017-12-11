@@ -309,6 +309,14 @@ public class UserController {
             }
               User user = userService.getUserByPhone(phone);
               if (user != null) {
+                  Map<String,Object> map = new HashMap<>();
+                  map.put("nickName",user.getNickname());
+                  List<UserAddress> userAddresses = userAddressService.listByUserId(user.getId());
+                  if(userAddresses.size()>0){
+                      map.put("addressExit",1);
+                  }else {
+                      map.put("addressExit",0);
+                  }
                  return RespStatus.success().element("token",TokenUtil.getToken(user.getId()));
                }else {
                   String uuid = MyUUID.getUUID();
@@ -318,7 +326,10 @@ public class UserController {
                   String   pwd = phone.substring(5);
                   Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2);
                   if(count>=1){
-                      return RespStatus.success().element("token", TokenUtil.getToken(uuid));
+                      Map<String,Object> map = new HashMap<>();
+                      map.put("nickName",phone1 + "****" + phone2);
+                      map.put("addressExit",0);
+                      return RespStatus.success().element("token", TokenUtil.getToken(uuid)).element("people",map);
                   }else {
                       return RespStatus.fail("登陆失败，请重试！");
                   }
@@ -329,5 +340,35 @@ public class UserController {
         }
     }
 
+
+    @RequestMapping(value = "/info",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject getUserInfo(String token){
+        try {
+            if(token==null || token.length()<=0){
+                return RespStatus.fail("token不能为空！");
+            }
+            User user = userService.getUserById(TokenUtil.getId(token));
+            if(user==null){
+                return RespStatus.fail("无效的token!");
+            }
+            List<UserAddress> userAddresses = userAddressService.listByUserId(user.getId());
+            if(userAddresses.size()<=0){
+                Map<String,Object> map = new HashMap<>();
+                map.put("nickname",user.getNickname());
+                map.put("addressExit",0);
+                return RespStatus.success().element("people",map);
+            }else {
+                Map<String,Object> map = new HashMap<>();
+                map.put("nickname",user.getNickname());
+                map.put("addressExit",1);
+                return RespStatus.success().element("people",map);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.fail("获取个人信息失败");
+        }
+
+    }
 
 }

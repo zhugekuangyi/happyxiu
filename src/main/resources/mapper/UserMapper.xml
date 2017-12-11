@@ -7,7 +7,7 @@
   </select>
  
   
-  <insert id="saveUser">
+  <insert id="savaUser" parameterType="Map">
     INSERT INTO user(`id`,
     `phone`,
     `password`,
@@ -16,14 +16,13 @@
     `sex`,
     `nickname`)
     VALUES
-    (#{userId},
+    (#{id},
     #{phone},
     #{password},
     #{ctime},
      0,
      0,
     #{nickname});
-
   </insert>
 
 
