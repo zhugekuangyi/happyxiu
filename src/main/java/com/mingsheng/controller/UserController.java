@@ -1,7 +1,9 @@
 package com.mingsheng.controller;
 
+import com.mingsheng.model.Code;
 import com.mingsheng.model.User;
 import com.mingsheng.model.UserAddress;
+import com.mingsheng.service.CodeService;
 import com.mingsheng.service.UserAddressService;
 import com.mingsheng.service.UserService;
 import com.mingsheng.utils.*;
@@ -25,6 +27,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserAddressService userAddressService;
+    @Autowired
+    private CodeService codeService;
 
 
     /**
@@ -49,7 +53,7 @@ public class UserController {
                 code += String.valueOf(r.nextInt(10));
             }
             SmsUtils.veriCode(phone, code);
-            RedisUtil.getRu().setex("reg" + phone, code, 1800);
+            codeService.addCode(phone,code);
             return RespStatus.success();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +84,7 @@ public class UserController {
                 code += String.valueOf(r.nextInt(10));
             }
             SmsUtils.veriCode(phone, code);
-            RedisUtil.getRu().setex("forgetPwd" + phone, code, 1800);
+            codeService.addCode(phone,code);
             return RespStatus.success();
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,12 +118,14 @@ public class UserController {
             if (code == null || code.trim().length() <= 0) {
                 return RespStatus.fail("验证码不能为空！");
             }
-
-            String s = RedisUtil.getRu().get("reg" + phone);
-            if(!code.equals(s)) {
-                return RespStatus.fail("验证码无效");
+            Code code1 = codeService.getCode(phone);
+            if(code1==null){
+                return RespStatus.fail("验证码错误");
+            }
+            if(code.equals(code1.getCode())){
+                codeService.delCode(phone);
             }else {
-                RedisUtil.getRu().del("reg" + phone);
+                return RespStatus.fail("验证码错误");
             }
             if (pwd == null || pwd.trim().length() <= 0) {
                 return RespStatus.fail("密码不能为空！");
@@ -173,12 +179,15 @@ public class UserController {
             return RespStatus.fail("验证码不能为空！");
         }
 
-        String s = RedisUtil.getRu().get("forgetPwd" + phone);
-        if(!code.equals(s)) {
-            return RespStatus.fail("验证码无效");
-        }else {
-            RedisUtil.getRu().del("forgetPwd" + phone);
-        }
+            Code code1 = codeService.getCode(phone);
+            if(code1==null){
+                return RespStatus.fail("验证码无效");
+            }
+            if(code.equals(code1.getCode())){
+                codeService.delCode(phone);
+            }else {
+                return RespStatus.fail("验证码无效");
+            }
         User user = userService.getUserByPhone(phone);
         if(user==null){
             return RespStatus.fail("您还没注册，请注册！");
@@ -261,7 +270,7 @@ public class UserController {
                 code += String.valueOf(r.nextInt(10));
             }
             SmsUtils.veriCode(phone, code);
-            RedisUtil.getRu().setex("login" + phone, code, 1800);
+            codeService.addCode(phone,code);
             return RespStatus.success();
         } catch (Exception e) {
             e.printStackTrace();
@@ -289,11 +298,14 @@ public class UserController {
                 return RespStatus.fail("验证码不能为空！");
             }
 
-            String s = RedisUtil.getRu().get("login" + phone);
-            if(!code.equals(s)) {
+            Code code1 = codeService.getCode(phone);
+            if(code1==null){
                 return RespStatus.fail("验证码无效");
+            }
+            if(code.equals(code1.getCode())){
+                codeService.delCode(phone);
             }else {
-                RedisUtil.getRu().del("reg" + phone);
+                return RespStatus.fail("验证码无效");
             }
               User user = userService.getUserByPhone(phone);
               if (user != null) {
