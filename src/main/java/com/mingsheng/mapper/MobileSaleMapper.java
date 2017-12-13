@@ -9,7 +9,8 @@ import java.util.List;
 @Component
 public interface MobileSaleMapper {
 
-        List<MobileSale> getList();
+        List<MobileSale> getList(@Param(value = "page") Integer page,@Param(value = "limit") Integer limit);
+
 
     MobileSale getInfo(@Param(value = "mobileType") String pid,
                        @Param(value = "mobileName") String id,

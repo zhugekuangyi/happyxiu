@@ -5,6 +5,8 @@ import com.mingsheng.model.SaleOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SaleOrderService {
 
@@ -14,5 +16,10 @@ public class SaleOrderService {
 
     public void insert(SaleOrder order){
         mapper.addOrder(order);
+    }
+
+
+    public List<SaleOrder> getListByUserId(String userId){
+        return mapper.getListByUserId(userId);
     }
 }

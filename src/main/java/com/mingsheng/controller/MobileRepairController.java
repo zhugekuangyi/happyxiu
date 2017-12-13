@@ -33,7 +33,8 @@ public class MobileRepairController {
     private QuestionService questionService;
     @Autowired
     private QuestionOrderService orderService;
-
+    @Autowired
+    private CodeService codeService;
 
 
     @ResponseBody
@@ -71,7 +72,7 @@ public class MobileRepairController {
 
     @ResponseBody
     @RequestMapping(value = "createOrder", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject createOrder(HttpServletRequest request,HttpServletResponse response,String token,String questionId,Integer status,String addressId,String remark,String mobileId){
+    public JSONObject createOrder(HttpServletRequest request,HttpServletResponse response,String token,String questionId,Integer status,String addressId,String remark,String mobileId,String code,String phone){
 
         try {
         if(token==null || token.length()<=0){
@@ -93,6 +94,21 @@ public class MobileRepairController {
         if(user ==null){
             return RespStatus.fail("该用户不存在");
         }
+        if (code == null || code.trim().length() <= 0) {
+            return RespStatus.fail("验证码不能为空！");
+        }
+        if(phone==null || phone.length()<=0){
+            return RespStatus.fail("手机号码不能为空");
+        }
+        Code code1 = codeService.getCode(phone);
+        if(code1==null){
+            return RespStatus.fail("验证码错误");
+        }
+        if(code.equals(code1.getCode())){
+            codeService.delCode(phone);
+        }else {
+            return RespStatus.fail("验证码错误");
+        }
         UserAddress userAddress = userAddressService.getAddById(addressId);
         if(userAddress==null){
             return RespStatus.fail("地址不存在");
@@ -105,20 +121,19 @@ public class MobileRepairController {
             order.setName(userAddress.getName());
 
             MobileType mobileColour = mobileTypeService.getInfoById(mobileId);
-            MobileType mobileMemory = mobileTypeService.getInfoById(mobileColour.getPid());
-            MobileType mobileName = mobileTypeService.getInfoById(mobileMemory.getPid());
+            MobileType mobileName = mobileTypeService.getInfoById(mobileColour.getPid());
             MobileType mobileType = mobileTypeService.getInfoById(mobileName.getPid());
             order.setMobileName(mobileName.getName());
             order.setMobileType(mobileType.getName());
             order.setMobileColour(mobileColour.getName());
-            order.setMobileMemory(mobileMemory.getName());
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
-            order.setPhone(userAddress.getPhone());
+            order.setPhone(phone);
             order.setUserId(user.getId());
             order.setQuestionId(questionId);
             Question question = questionService.selectResultById(questionId);
             order.setQuestionResult(question.getQuestionResult());
+            order.setPrice(question.getPrice());
             if(remark==null || remark.length()<=0){
                 order.setRemark("");
             }else {
@@ -126,7 +141,7 @@ public class MobileRepairController {
             }
             orderService.insert(order);
 
-        return null;
+        return RespStatus.success();
 
         } catch (Exception e) {
             e.printStackTrace();

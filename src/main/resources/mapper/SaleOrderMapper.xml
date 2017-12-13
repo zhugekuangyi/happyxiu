@@ -5,11 +5,15 @@
  
   
   <insert id="addOrder">
-    INSERT INTO `saleorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`, `mobileMemory`, `mobileColour`, `price`, `name`)
+    INSERT INTO `saleorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`, `mobileMemory`, `mobileColour`, `price`, `name`,img)
 VALUES
-	(#{id}, #{orderNo}, #{userId},#{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileMemory}, #{mobileColour}, #{price}, #{name});
+	(#{id}, #{orderNo}, #{userId},#{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileMemory}, #{mobileColour}, #{price}, #{name},#{img});
 
 
   </insert>
+
+    <select id="getListByUserId" parameterType="String" resultType="com.mingsheng.model.SaleOrder">
+        SELECT * FROM `saleorder` where userId=#{userId}
+    </select>
 
 </mapper>

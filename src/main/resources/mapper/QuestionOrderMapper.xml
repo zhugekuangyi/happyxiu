@@ -4,9 +4,12 @@
 
  <insert id="insert" parameterType="com.mingsheng.model.QuestionOrder">
 
-   INSERT INTO `questionorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`, `mobileMemory`, `mobileColour`, `price`, `name`, `questionId`, `questionResult`)
+   INSERT INTO `questionorder` (`id`, `orderNo`, `userId`, `address`, `orderStatus`, `remark`, `phone`, `isDel`, `ctime`, `mobileType`, `mobileName`,  `mobileColour`, `price`, `name`, `questionId`, `questionResult`)
    VALUES
-	(#{id}, #{orderNo}, #{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileMemory}, #{mobileColour}, #{price}, #{name}, #{questionId}, #{questionResult});
+	(#{id}, #{orderNo},#{userId}, #{address}, #{orderStatus}, #{remark}, #{phone}, 0, #{ctime}, #{mobileType}, #{mobileName}, #{mobileColour}, #{price}, #{name}, #{questionId}, #{questionResult});
 
  </insert>
+    <select id="getListByUserId" parameterType="String" resultType="com.mingsheng.model.QuestionOrder">
+        SELECT * FROM questionorder where userId=#{userId} and isDel=0
+    </select>
 </mapper>

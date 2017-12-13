@@ -1,11 +1,7 @@
 package com.mingsheng.controller;
 
-import com.mingsheng.model.Code;
-import com.mingsheng.model.User;
-import com.mingsheng.model.UserAddress;
-import com.mingsheng.service.CodeService;
-import com.mingsheng.service.UserAddressService;
-import com.mingsheng.service.UserService;
+import com.mingsheng.model.*;
+import com.mingsheng.service.*;
 import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "user")
@@ -29,6 +22,14 @@ public class UserController {
     private UserAddressService userAddressService;
     @Autowired
     private CodeService codeService;
+    @Autowired
+    private QuestionOrderService questionService;
+    @Autowired
+    private RecoveryOrderService recoveryOrderService;
+    @Autowired
+    private SaleOrderService saleOrderService;
+    @Autowired
+    private QuestionService qService;
 
 
     /**
@@ -370,5 +371,85 @@ public class UserController {
         }
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/orderList",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject orderList(String token,Integer page){
+        try {
+
+
+        if(token ==null || token.length()<=0){
+            return RespStatus.fail("token不能为空！");
+        }
+        List<QuestionOrder> questionOrderList = questionService.getListByUserId(TokenUtil.getId(token));
+        List<RecoveryOrder>  recoveryOrderList = recoveryOrderService.getListByUserId(TokenUtil.getId(token));
+        List<SaleOrder> saleOrderList = saleOrderService.getListByUserId(TokenUtil.getId(token));
+        List<Map<String,Object>> list = new LinkedList<>();
+        for (QuestionOrder q:questionOrderList) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",q.getId());
+            map.put("type",0);
+            map.put("mobile",q.getMobileType()+"/"+q.getMobileName()+"/"+q.getMobileColour());
+            map.put("result",q.getQuestionResult());
+            map.put("price",q.getPrice());
+            Question question = qService.selectResultById(q.getQuestionId());
+            String qu="";
+            if("1".equals(question.getQuestionType())){
+                qu="屏幕问题";
+            }else if("2".equals(question.getQuestionType())){
+                qu="外壳问题";
+            }else if("3".equals(question.getQuestionType())){
+                qu="电池问题";
+            }else if("4".equals(question.getQuestionType())){
+                qu="声音问题";
+            }else if("5".equals(question.getQuestionType())){
+                qu="按键问题";
+            }else if("6".equals(question.getQuestionType())){
+                qu="摄像拍照";
+            }else if("7".equals(question.getQuestionType())){
+                qu="内存神经";
+            }else {
+                qu="其他问题";
+            }
+            map.put("question",qu+"/"+question.getDescription());
+            list.add(map);
+        }
+        for (RecoveryOrder r:recoveryOrderList) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",r.getId());
+            map.put("price",r.getPrice());
+            map.put("mobile",r.getMobileName());
+            if(r.getImg()==null || r.getImg().length()<=0){
+                map.put("img",ImgUtils.defaultUrl);
+            }else {
+                map.put("img",ImgUtils.imgUrl+r.getImg());
+            }
+            list.add(map);
+
+        }
+
+        for (SaleOrder so:saleOrderList) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",so.getId());
+            map.put("price",so.getPrice());
+            map.put("mobile",so.getMobileName());
+            if(so.getImg()==null || so.getImg().length()<=0){
+                map.put("img",ImgUtils.defaultUrl);
+            }else {
+                map.put("img",ImgUtils.imgUrl+so.getImg());
+            }
+            list.add(map);
+        }
+        if(list.size()<=10){
+            return RespStatus.success().element("list",list);
+        }else {
+            List<Map<String, Object>> list1 = list.subList((page - 1) * 10, page * 10);
+            return RespStatus.success().element("list",list1);
+        }
+        }catch (Exception e){
+            return RespStatus.fail("获取列表失败！");
+        }
+    }
+
 
 }

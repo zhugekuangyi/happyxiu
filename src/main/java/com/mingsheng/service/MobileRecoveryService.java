@@ -19,9 +19,8 @@ public class MobileRecoveryService {
     @Autowired
     private MobileTypeMapper mobileTypeMapper;
 
-    public List getList(){
-        List<MobileRecovery> list = mapper.getList();
-
+    public List getList(Integer page,Integer limit){
+        List<MobileRecovery> list = mapper.getList(page,limit);
         List<MobileRecovery> list1 = new ArrayList();
         for (MobileRecovery mr:list) {
             MobileRecovery mobileRecovery = new MobileRecovery();

@@ -34,10 +34,10 @@ public class MobileSaleController {
 
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getList(HttpServletRequest request, HttpServletResponse response){
+    public JSONObject getList(HttpServletRequest request, HttpServletResponse response,Integer page){
         List list =null;
         try {
-            list = mobileSaleService.getList();
+            list = mobileSaleService.getList(page,10);
             return RespStatus.success().element("list",list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,14 +82,10 @@ public class MobileSaleController {
             order.setAddress(userAddress.getAddress());
             order.setCtime(new Timestamp(System.currentTimeMillis()));
             order.setName(userAddress.getName());
-            MobileType mobileName = mobileTypeService.getInfoById(mobileSale.getMobileName());
-            MobileType mobileType = mobileTypeService.getInfoById(mobileSale.getMobileType());
-            order.setMobileName(mobileName.getName());
-            order.setMobileType(mobileType.getName());
-            MobileType mobileMemory = mobileTypeService.getInfoById(mobileSale.getMobileMemory());
-            MobileType mobileColour = mobileTypeService.getInfoById(mobileSale.getMobileColour());
-            order.setMobileColour(mobileColour.getName());
-            order.setMobileMemory(mobileMemory.getName());
+            order.setMobileName(mobileSale.getMobileName());
+            order.setMobileType(mobileSale.getMobileType());
+            order.setMobileColour(mobileSale.getMobileColour());
+            order.setMobileMemory(mobileSale.getMobileMemory());
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
             order.setPhone(userAddress.getPhone());

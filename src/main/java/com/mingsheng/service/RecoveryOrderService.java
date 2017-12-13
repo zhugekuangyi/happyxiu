@@ -5,6 +5,8 @@ import com.mingsheng.model.RecoveryOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RecoveryOrderService {
 
@@ -14,5 +16,10 @@ public class RecoveryOrderService {
 
     public void insert(RecoveryOrder order){
         recoveryOrderMapper.addOrder(order);
+    }
+
+    public List<RecoveryOrder> getListByUserId(String id) {
+
+        return recoveryOrderMapper.getListByUserId(id);
     }
 }

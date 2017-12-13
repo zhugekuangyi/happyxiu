@@ -26,7 +26,17 @@ public class RecoveryOrder {
 
     private Double price;
 
+    private String img;
+
     private String name;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public Double getPrice() {
         return price;

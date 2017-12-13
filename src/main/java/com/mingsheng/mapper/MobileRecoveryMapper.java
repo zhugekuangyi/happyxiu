@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface MobileRecoveryMapper {
 
-        List<MobileRecovery> getList();
+        List<MobileRecovery> getList(@Param(value = "page") Integer page,@Param(value = "limit") Integer limit);
 
     MobileRecovery getInfo(@Param(value = "mobileType") String pid, @Param(value = "mobileName") String id);
 

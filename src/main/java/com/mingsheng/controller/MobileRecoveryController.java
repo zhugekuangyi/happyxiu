@@ -32,6 +32,8 @@ public class MobileRecoveryController {
     private RecoveryOrderService recoveryOrderService;
     @Autowired
     private MobileTypeService mobileTypeService;
+    @Autowired
+    private CodeService codeService;
 
 
     /**
@@ -42,10 +44,10 @@ public class MobileRecoveryController {
      */
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getMobileRecoveyList(HttpServletRequest request, HttpServletResponse response){
+    public JSONObject getMobileRecoveyList(HttpServletRequest request, HttpServletResponse response,Integer page){
         List list = null;
         try {
-            list = mobileRecoveryService.getList();
+            list = mobileRecoveryService.getList(page,10);
             return RespStatus.success().element("list",list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +59,7 @@ public class MobileRecoveryController {
 
     @ResponseBody
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject insert(HttpServletRequest request,String token,String mobileId,Integer status,String addressId,String remark){
+    public JSONObject insert(HttpServletRequest request,String token,String mobileId,Integer status,String addressId,String remark,String phone,String code){
 
         try {
             if(token==null || token.length()<=0){
@@ -84,6 +86,21 @@ public class MobileRecoveryController {
             if(recovery ==null){
                 return RespStatus.fail("该回收商品不存在");
             }
+            if (code == null || code.trim().length() <= 0) {
+                return RespStatus.fail("验证码不能为空！");
+            }
+            if(phone==null || phone.length()<=0){
+                return RespStatus.fail("手机号码不能为空");
+            }
+            Code code1 = codeService.getCode(phone);
+            if(code1==null){
+                return RespStatus.fail("验证码错误");
+            }
+            if(code.equals(code1.getCode())){
+                codeService.delCode(phone);
+            }else {
+                return RespStatus.fail("验证码错误");
+            }
 
             RecoveryOrder order = new RecoveryOrder();
             order.setId(MyUUID.getUUID());
@@ -96,9 +113,10 @@ public class MobileRecoveryController {
             order.setMobileType(mobileType.getName());
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
-            order.setPhone(userAddress.getPhone());
+            order.setPhone(phone);
             order.setPrice(recovery.getPrice());
             order.setUserId(user.getId());
+            order.setImg(recovery.getImg());
             if(remark==null || remark.length()<=0){
                 order.setRemark("");
             }else {

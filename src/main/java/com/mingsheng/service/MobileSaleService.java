@@ -16,30 +16,24 @@ public class MobileSaleService {
 
     @Autowired
     private MobileSaleMapper mapper;
-    @Autowired
-    private MobileTypeMapper mobileTypeMapper;
 
-    public List getList(){
-        List<MobileSale> list = mapper.getList();
-        List<MobileSale> list1 = new ArrayList();
-        for (MobileSale ms:list) {
+    public List getList(Integer page,Integer limit){
+        List<MobileSale> list = mapper.getList(page,limit);
+        List<MobileSale> list1 = new ArrayList<>();
+        for (MobileSale m:list) {
             MobileSale mobileSale = new MobileSale();
-            mobileSale.setId(ms.getId());
-            MobileType mobileType = mobileTypeMapper.getInfoById(ms.getMobileType());
-            MobileType mobileName = mobileTypeMapper.getInfoById(ms.getMobileName());
-            mobileSale.setMobileName(mobileName.getName());
-            mobileSale.setMobileType(mobileType.getName());
-            MobileType mobileMemory = mobileTypeMapper.getInfoById(ms.getMobileMemory());
-            mobileSale.setMobileMemory(mobileMemory.getName());
-            MobileType mobileColour = mobileTypeMapper.getInfoById(ms.getMobileColour());
-            mobileSale.setMobileColour(mobileColour.getName());
-            mobileSale.setPrice(ms.getPrice());
-            if(mobileSale.getImg()==null || mobileSale.getImg().length()<=0){
-                mobileSale.setImg(ImgUtils.defaultUrl);
+            mobileSale.setId(m.getId());
+            mobileSale.setMobileColour(m.getMobileColour());
+            mobileSale.setMobileMemory(m.getMobileMemory());
+            mobileSale.setMobileName(m.getMobileName());
+            mobileSale.setMobileType(m.getMobileType());
+            mobileSale.setPrice(m.getPrice());
+            mobileSale.setCtime(m.getCtime());
+            if(m.getImg()==null || m.getImg().length()<=0){
+              mobileSale.setImg(ImgUtils.defaultUrl);
             }else {
-                mobileSale.setImg(ImgUtils.imgUrl+mobileSale.getImg());
+                mobileSale.setImg(ImgUtils.imgUrl+m.getImg());
             }
-            mobileSale.setCtime(ms.getCtime());
             list1.add(mobileSale);
         }
         return list1;

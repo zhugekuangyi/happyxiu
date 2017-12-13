@@ -24,8 +24,6 @@ public class QuestionOrder {
 
     private String mobileName;
 
-    private String mobileMemory;
-
     private String mobileColour;
 
     private String questionId;
@@ -115,14 +113,6 @@ public class QuestionOrder {
 
     public void setMobileName(String mobileName) {
         this.mobileName = mobileName;
-    }
-
-    public String getMobileMemory() {
-        return mobileMemory;
-    }
-
-    public void setMobileMemory(String mobileMemory) {
-        this.mobileMemory = mobileMemory;
     }
 
     public String getMobileColour() {

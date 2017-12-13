@@ -63,9 +63,9 @@ public class SmsUtils {
     }
 	
 	public static void main(String[] args) throws ClientException {
-        veriCode("18606716927", "1234");
+//        veriCode("18606716927", "1234");
 
-//		veriCode("13957128430","1234");
+		veriCode("13957128430","1234");
 	}
 
 }

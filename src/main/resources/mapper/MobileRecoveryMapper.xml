@@ -3,7 +3,14 @@
 <mapper namespace="com.mingsheng.mapper.MobileRecoveryMapper">
  
   <select id="getList" resultType="com.mingsheng.model.MobileRecovery">
-    SELECT * from mobileRecovery order BY  ctime DESC limit 10;
+    SELECT * from mobileRecovery order BY  ctime DESC  <choose>
+    <when test="page == null or limit == null">
+      limit 0,10
+    </when>
+    <otherwise>
+      <![CDATA[limit ${(page-1)*limit},#{limit}]]>
+    </otherwise>
+  </choose>
   </select>
 
 

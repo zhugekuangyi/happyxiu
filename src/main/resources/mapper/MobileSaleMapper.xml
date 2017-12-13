@@ -3,7 +3,15 @@
 <mapper namespace="com.mingsheng.mapper.MobileSaleMapper">
  
   <select id="getList" resultType="com.mingsheng.model.MobileSale">
-    SELECT * from mobileSale order BY  ctime DESC limit 10;
+    SELECT * from mobileSale order BY  ctime DESC
+    <choose>
+      <when test="page == null or limit == null">
+        limit 0,10
+      </when>
+      <otherwise>
+        <![CDATA[limit ${(page-1)*limit},#{limit}]]>
+      </otherwise>
+    </choose>
   </select>
 
 

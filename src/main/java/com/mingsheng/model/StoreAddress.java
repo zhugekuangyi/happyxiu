@@ -6,6 +6,8 @@ public class StoreAddress {
 
     private String id;
 
+    private String title;
+
     private String address;
 
     private String remark;
@@ -13,6 +15,14 @@ public class StoreAddress {
     private Timestamp ctime;
 
     private String img;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getImg() {
         return img;

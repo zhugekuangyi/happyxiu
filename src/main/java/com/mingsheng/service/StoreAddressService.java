@@ -15,7 +15,7 @@ public class StoreAddressService {
 
 
     public void insert(StoreAddress address){
-        mapper.insert(address.getId(),address.getAddress(),address.getRemark(),address.getImg(),address.getCtime());
+        mapper.insert(address.getId(),address.getAddress(),address.getRemark(),address.getImg(),address.getTitle(),address.getCtime());
     }
 
     public List<StoreAddress> getStoreAddress(){
