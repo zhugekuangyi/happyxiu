@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mingsheng.mapper.BrandMapper">
 
-  <select id="list" resultType="com.mingsheng.model.Brand">
-    SELECT * FROM  brand ORDER  BY  ctime DESC;
+  <select id="list" parameterType="Integer" resultType="com.mingsheng.model.Brand">
+    SELECT * FROM  brand  where type= #{type} ORDER  BY  ctime DESC;
   </select>
 
 </mapper>

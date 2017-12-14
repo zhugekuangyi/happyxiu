@@ -31,6 +31,8 @@ public class MobileSaleController {
     private MobileTypeService mobileTypeService;
     @Autowired
     private SaleOrderService saleOrderService;
+    @Autowired
+    private CodeService codeService;
 
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -49,7 +51,7 @@ public class MobileSaleController {
 
     @ResponseBody
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject insert(HttpServletRequest request,String token,String mobileId,Integer status,String addressId,String remark){
+    public JSONObject insert(HttpServletRequest request,String token,String mobileId,Integer status,String addressId,String remark,String phone,String code){
 
         try {
             if(token==null || token.length()<=0){
@@ -77,6 +79,19 @@ public class MobileSaleController {
                 return RespStatus.fail("该商品不存在");
             }
 
+            if(phone==null || phone.length()<=0){
+                return RespStatus.fail("手机号码不能为空");
+            }
+            Code code1 = codeService.getCode(phone);
+            if(code1==null){
+                return RespStatus.fail("验证码错误");
+            }
+            if(code.equals(code1.getCode())){
+                codeService.delCode(phone);
+            }else {
+                return RespStatus.fail("验证码错误");
+            }
+
             SaleOrder order = new SaleOrder();
             order.setId(MyUUID.getUUID());
             order.setAddress(userAddress.getAddress());
@@ -88,7 +103,7 @@ public class MobileSaleController {
             order.setMobileMemory(mobileSale.getMobileMemory());
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
-            order.setPhone(userAddress.getPhone());
+            order.setPhone(phone);
             order.setUserId(user.getId());
             if(remark==null || remark.length()<=0){
                 order.setRemark("");

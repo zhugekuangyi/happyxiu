@@ -42,10 +42,10 @@ public class CommController {
 
     @RequestMapping(value = "/brandList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject getList(HttpServletRequest request, HttpServletResponse response){
+    public JSONObject getList(HttpServletRequest request, HttpServletResponse response,Integer type){
 
         List brandList = new ArrayList();
-        List<Brand> list = brandService.getList();
+        List<Brand> list = brandService.getList(type);
         for (Brand b:list) {
             if(b.getImg()==null || b.getImg().trim().length()<=0){
                 brandList.add(ImgUtils.defaultUrl);

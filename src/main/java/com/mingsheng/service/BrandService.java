@@ -13,8 +13,8 @@ public class BrandService {
     @Autowired
     private BrandMapper mapper;
 
-    public List<Brand> getList(){
+    public List<Brand> getList(Integer type){
 
-        return mapper.list();
+        return mapper.list(type);
     }
 }
