@@ -141,7 +141,7 @@ public class UserController {
             if (pwd == null || pwd == "") {
                 pwd = phone.substring(5);
             }
-            Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2);
+            Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2,"http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
             if(count>=1){
                 User userByPhone = userService.getUserByPhone(phone);
                 Map<String,Object> map = new HashMap<>();
@@ -152,6 +152,7 @@ public class UserController {
                 }else {
                     map.put("addressExit",0);
                 }
+                map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                 return RespStatus.success().element("token", TokenUtil.getToken(uuid)).element("people",map);
             }else {
                 return RespStatus.fail("注册失败");
@@ -202,6 +203,7 @@ public class UserController {
             }else {
                 map.put("addressExit",0);
             }
+            map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
         return RespStatus.success().element("token",TokenUtil.getToken(user.getId())).element("people",map);
     } catch (Exception e) {
         e.printStackTrace();
@@ -242,6 +244,7 @@ public class UserController {
             }else {
                 map.put("addressExit",0);
             }
+            map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
             return RespStatus.success().element("token", TokenUtil.getToken(user.getId())).element("people",map);
         }else {
             return RespStatus.fail("密码错误，请重新输入");
@@ -325,11 +328,12 @@ public class UserController {
                   String phone1 = phone.substring(0, 3);
                   String phone2 = phone.substring(7, 11);
                   String   pwd = phone.substring(5);
-                  Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2);
+                  Integer count = userService.savaUser(uuid, phone, pwd, time, phone1 + "****" + phone2,"http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                   if(count>=1){
                       Map<String,Object> map = new HashMap<>();
                       map.put("nickName",phone1 + "****" + phone2);
                       map.put("addressExit",0);
+                      map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                       return RespStatus.success().element("token", TokenUtil.getToken(uuid)).element("people",map);
                   }else {
                       return RespStatus.fail("登陆失败，请重试！");
@@ -358,11 +362,13 @@ public class UserController {
                 Map<String,Object> map = new HashMap<>();
                 map.put("nickname",user.getNickname());
                 map.put("addressExit",0);
+                map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                 return RespStatus.success().element("people",map);
             }else {
                 Map<String,Object> map = new HashMap<>();
                 map.put("nickname",user.getNickname());
                 map.put("addressExit",1);
+                map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                 return RespStatus.success().element("people",map);
             }
         } catch (Exception e) {
@@ -419,6 +425,7 @@ public class UserController {
             map.put("id",r.getId());
             map.put("price",r.getPrice());
             map.put("mobile",r.getMobileName());
+            map.put("type",1);
             if(r.getImg()==null || r.getImg().length()<=0){
                 map.put("img",ImgUtils.defaultUrl);
             }else {
@@ -433,6 +440,7 @@ public class UserController {
             map.put("id",so.getId());
             map.put("price",so.getPrice());
             map.put("mobile",so.getMobileName());
+            map.put("type",2);
             if(so.getImg()==null || so.getImg().length()<=0){
                 map.put("img",ImgUtils.defaultUrl);
             }else {
@@ -448,6 +456,116 @@ public class UserController {
         }
         }catch (Exception e){
             return RespStatus.fail("获取列表失败！");
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/orderDetail",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getOrderDetail(String token,String orderId,Integer type){
+
+        try {
+
+            if (token == null || token.length() <= 0) {
+                return RespStatus.fail("token不能为空！");
+            }
+            if (orderId == null || orderId.length() <= 0) {
+                return RespStatus.fail("orderId不能为空！");
+            }
+            if (type == null || type < 0 || type > 3) {
+                return RespStatus.fail("type不正确！");
+            }
+            if (type == 0) {
+                QuestionOrder q = questionService.getOrderById(orderId);
+                if (q == null) {
+                    RespStatus.fail("订单不存在");
+                }
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", q.getId());
+                map.put("type", 0);
+                map.put("mobile", q.getMobileType() + "/" + q.getMobileName() + "/" + q.getMobileColour());
+                map.put("result", q.getQuestionResult());
+                map.put("price", q.getPrice());
+                Question question = qService.selectResultById(q.getQuestionId());
+                String qu = "";
+                if ("1".equals(question.getQuestionType())) {
+                    qu = "屏幕问题";
+                } else if ("2".equals(question.getQuestionType())) {
+                    qu = "外壳问题";
+                } else if ("3".equals(question.getQuestionType())) {
+                    qu = "电池问题";
+                } else if ("4".equals(question.getQuestionType())) {
+                    qu = "声音问题";
+                } else if ("5".equals(question.getQuestionType())) {
+                    qu = "按键问题";
+                } else if ("6".equals(question.getQuestionType())) {
+                    qu = "摄像拍照";
+                } else if ("7".equals(question.getQuestionType())) {
+                    qu = "内存神经";
+                } else {
+                    qu = "其他问题";
+                }
+                map.put("question", qu + "/" + question.getDescription());
+                map.put("remark", q.getRemark());
+                if (q.getOrderStatus() == 0) {
+                    map.put("orderStatus", "到店维修");
+                } else {
+                    map.put("orderStatus", "上门维修");
+                }
+                map.put("phone", q.getPhone());
+                map.put("address", q.getAddress());
+                map.put("name", q.getName());
+                return RespStatus.success().element("data", map);
+            } else if (type == 1) {
+                RecoveryOrder so = recoveryOrderService.getOrderById(orderId);
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", so.getId());
+                map.put("price", so.getPrice());
+                map.put("mobile", so.getMobileName());
+                map.put("type", 1);
+                if (so.getImg() == null || so.getImg().length() <= 0) {
+                    map.put("img", ImgUtils.defaultUrl);
+                } else {
+                    map.put("img", ImgUtils.imgUrl + so.getImg());
+                }
+                map.put("phone", so.getPhone());
+                map.put("address", so.getAddress());
+                map.put("name", so.getName());
+                if (so.getOrderStatus() == 0) {
+                    map.put("orderStatus", "到店回收");
+                } else {
+                    map.put("orderStatus", "上门回收");
+                }
+                map.put("remark",so.getRemark());
+                return RespStatus.success().element("data", map);
+            } else {
+                SaleOrder so = saleOrderService.getOrderById(orderId);
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", so.getId());
+                map.put("price", so.getPrice());
+                map.put("mobile", so.getMobileName());
+                map.put("type", 1);
+                if (so.getImg() == null || so.getImg().length() <= 0) {
+                    map.put("img", ImgUtils.defaultUrl);
+                } else {
+                    map.put("img", ImgUtils.imgUrl + so.getImg());
+                }
+                map.put("phone", so.getPhone());
+                map.put("address", so.getAddress());
+                map.put("name", so.getName());
+                if (so.getOrderStatus() == 0) {
+                    map.put("orderStatus", "到店");
+                } else if(so.getOrderStatus() == 1){
+                    map.put("orderStatus", "上门");
+                }else {
+                    map.put("orderStatus", "快递");
+                }
+                map.put("remark",so.getRemark());
+                return RespStatus.success().element("data", map);
+            }
+
+        }catch (Exception e){
+            return RespStatus.fail("获取失败！");
         }
     }
 

@@ -22,4 +22,8 @@ public class RecoveryOrderService {
 
         return recoveryOrderMapper.getListByUserId(id);
     }
+
+    public RecoveryOrder getOrderById(String orderId) {
+        return recoveryOrderMapper.getOrderById(orderId);
+    }
 }

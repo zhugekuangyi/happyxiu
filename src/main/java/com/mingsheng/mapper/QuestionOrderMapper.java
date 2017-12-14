@@ -12,4 +12,6 @@ public interface QuestionOrderMapper {
     void insert(QuestionOrder order);
 
     List<QuestionOrder> getListByUserId(@Param(value = "userId") String id);
+
+    QuestionOrder getOrderById(@Param(value = "id") String orderId);
 }

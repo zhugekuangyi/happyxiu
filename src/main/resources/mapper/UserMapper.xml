@@ -14,7 +14,8 @@
     `ctime`,
     `isDel`,
     `sex`,
-    `nickname`)
+    `nickname`,
+    img)
     VALUES
     (#{id},
     #{phone},
@@ -22,7 +23,8 @@
     #{ctime},
      0,
      0,
-    #{nickname});
+    #{nickname},
+    #{img});
   </insert>
 
 

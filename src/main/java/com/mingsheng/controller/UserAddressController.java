@@ -138,9 +138,6 @@ public class UserAddressController {
             if (name == null || name.trim().length() <= 0) {
                 return RespStatus.fail("name不能为空");
             }
-            if (phone == null || phone.trim().length() <= 0) {
-                return RespStatus.fail("phone不能为空");
-            }
             if(address ==null || address.trim().length()<=0){
                 return RespStatus.fail("地址不能为空");
             }

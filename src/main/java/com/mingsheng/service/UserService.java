@@ -18,8 +18,8 @@ public class UserService {
         return user;
     }
 
-    public Integer savaUser(String id, String phone, String pwd, Timestamp time, String nickName ){
-        Integer integer = userMapper.savaUser(id, phone, pwd, time, nickName);
+    public Integer savaUser(String id, String phone, String pwd, Timestamp time, String nickName,String img){
+        Integer integer = userMapper.savaUser(id, phone, pwd, time, nickName,img);
         return integer;
     }
 

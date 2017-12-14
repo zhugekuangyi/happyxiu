@@ -13,7 +13,11 @@ VALUES
   </insert>
 
     <select id="getListByUserId" parameterType="String" resultType="com.mingsheng.model.SaleOrder">
-        SELECT * FROM `saleorder` where userId=#{userId}
+        SELECT * FROM `saleorder` where userId=#{userId} and isDel=0
     </select>
+
+  <select id="getOrderById" parameterType="String" resultType="com.mingsheng.model.SaleOrder">
+    SELECT * FROM `saleorder` where id=#{id} and isDel=0
+  </select>
 
 </mapper>

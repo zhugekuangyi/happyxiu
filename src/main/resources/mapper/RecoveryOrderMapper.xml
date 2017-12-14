@@ -11,4 +11,8 @@ VALUES
 <select id="getListByUserId" parameterType="String" resultType="com.mingsheng.model.RecoveryOrder">
 	SELECT * from `recoveryorder` where userId=#{userId} and isDel=0
 </select>
+
+	<select id="getOrderById" parameterType="String" resultType="com.mingsheng.model.RecoveryOrder">
+		SELECT * FROM  `recoveryorder`where id=#{id} and isDel=0
+	</select>
 </mapper>

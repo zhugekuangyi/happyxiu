@@ -22,4 +22,8 @@ public class QuestionOrderService {
 
         return mapper.getListByUserId(id);
     }
+
+    public QuestionOrder getOrderById(String orderId){
+        return mapper.getOrderById(orderId);
+    }
 }

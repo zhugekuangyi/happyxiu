@@ -18,7 +18,8 @@ public interface UserMapper {
                      @Param(value = "phone") String phone,
                      @Param(value = "password") String pwd,
                      @Param(value = "ctime") Timestamp time,
-                     @Param(value = "nickname") String nickName);
+                     @Param(value = "nickname") String nickName,
+                     @Param(value = "img") String img);
 
     User getUserById(@Param(value = "userId") String id);
 

@@ -12,4 +12,8 @@
     <select id="getListByUserId" parameterType="String" resultType="com.mingsheng.model.QuestionOrder">
         SELECT * FROM questionorder where userId=#{userId} and isDel=0
     </select>
+
+    <select id="getOrderById" parameterType="String" resultType="com.mingsheng.model.QuestionOrder">
+        SELECT * FROM  questionorder where id=#{id} and isDel=0
+    </select>
 </mapper>
