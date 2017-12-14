@@ -2,10 +2,7 @@ package com.mingsheng.controller;
 
 import com.mingsheng.model.*;
 import com.mingsheng.service.*;
-import com.mingsheng.utils.MyUUID;
-import com.mingsheng.utils.RespStatus;
-import com.mingsheng.utils.StringUtil;
-import com.mingsheng.utils.TokenUtil;
+import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "mobileRecovery")
@@ -138,7 +137,7 @@ public class MobileRecoveryController {
     @RequestMapping(value = "/getPrice", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JSONObject getPrice(HttpServletRequest request,String mobileType,String mobileName){
-        MobileRecovery recovery=null;
+        Map<String,Object> map = new HashMap<>();
 
         try {
             if(mobileType==null || mobileType.length()<=0){
@@ -149,13 +148,26 @@ public class MobileRecoveryController {
                 return RespStatus.fail("mobileName不能为空");
             }
 
-            recovery = mobileRecoveryService.getInfo(mobileType,mobileName);
+            MobileRecovery recovery = mobileRecoveryService.getInfo(mobileType,mobileName);
+
+
+            map.put("id",recovery.getId());
+            map.put("price",recovery.getPrice());
+            if(recovery.getImg()==null || recovery.getImg().trim().length()<=0){
+                map.put("img", ImgUtils.defaultUrl);
+            }else {
+                map.put("img",ImgUtils.imgUrl+recovery.getImg());
+            }
+            MobileType name = mobileTypeService.getInfoById(recovery.getMobileName());
+            map.put("mobileName",name.getName());
+            MobileType type = mobileTypeService.getInfoById(recovery.getMobileType());
+            map.put("mobileType",type.getName());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(recovery!=null){
-            return RespStatus.success().element("recovery",recovery);
+        if(map.get(("id"))!=null){
+            return RespStatus.success().element("recovery",map);
         }else {
             return RespStatus.fail("手机型号不支持回收");
         }

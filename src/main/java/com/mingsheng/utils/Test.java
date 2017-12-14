@@ -1,15 +1,19 @@
 package com.mingsheng.utils;
 
+import org.apache.commons.fileupload.FileItem;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.File;
 import java.sql.Timestamp;
 
 public class Test {
 
     public static void main(String[] args) {
 
-        System.out.println(MyUUID.getUUID());
+        File file = new File("/Users/chuqi/Desktop/1.png");
 
-        System.out.println(new Timestamp(System.currentTimeMillis()));
+        CommonsMultipartFile file1 = new CommonsMultipartFile(file);
 
-        System.out.println(TokenUtil.getToken("UBRI15Fp"));
+        OSSUtil.upload_img(file);
     }
 }
