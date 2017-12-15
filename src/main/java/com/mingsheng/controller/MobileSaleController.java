@@ -104,6 +104,7 @@ public class MobileSaleController {
             order.setOrderNo(StringUtil.getOrderNum());
             order.setOrderStatus(status);
             order.setPhone(phone);
+            order.setPrice(mobileSale.getPrice());
             order.setUserId(user.getId());
             if(remark==null || remark.length()<=0){
                 order.setRemark("");
