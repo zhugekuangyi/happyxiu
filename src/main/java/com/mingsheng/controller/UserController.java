@@ -360,13 +360,13 @@ public class UserController {
             List<UserAddress> userAddresses = userAddressService.listByUserId(user.getId());
             if(userAddresses.size()<=0){
                 Map<String,Object> map = new HashMap<>();
-                map.put("nickname",user.getNickname());
+                map.put("nickName",user.getNickname());
                 map.put("addressExit",0);
                 map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                 return RespStatus.success().element("people",map);
             }else {
                 Map<String,Object> map = new HashMap<>();
-                map.put("nickname",user.getNickname());
+                map.put("nickName",user.getNickname());
                 map.put("addressExit",1);
                 map.put("img","http://happyxiu.oss-cn-beijing.aliyuncs.com/touxiang.png");
                 return RespStatus.success().element("people",map);

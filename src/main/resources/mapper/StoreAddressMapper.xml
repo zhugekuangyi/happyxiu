@@ -7,11 +7,15 @@
   </select>
 
 
-  <insert id="insert" parameterType="String">
+  <insert id="insert" parameterType="Map">
     insert into storeAddress(id,address,img,remark,ctime)VALUES (#{id},#{address},#{img},#{remark},#{ctime});
   </insert>
 
   <select id="getStoreAddress" resultType="com.mingsheng.model.StoreAddress">
     select * from storeAddress;
   </select>
+  
+  <delete id="del" parameterType="String">
+    DELETE  from storeAddress where id=#{id}
+  </delete>
 </mapper>

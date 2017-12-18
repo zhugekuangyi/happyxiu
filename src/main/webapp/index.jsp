@@ -1,5 +1,1 @@
-<html>
-<body>
-<h2>Hello World!</h2>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"><title>蜂鸟快修</title><link rel=stylesheet href=../../static/css/reset.css><link href=/static/css/app.fb58bcb1c99a71bc113402f4ad4bb794.css rel=stylesheet></head><body><div id=app><newworld></newworld></div><script type=text/javascript src=/static/js/manifest.ca007d93d82a8d5ca269.js></script><script type=text/javascript src=/static/js/vendor.ca127022006bfdd095d0.js></script><script type=text/javascript src=/static/js/app.40d7a2a57b95fe904cfc.js></script></body></html>

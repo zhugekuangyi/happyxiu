@@ -23,4 +23,31 @@
     SELECT * from mobileSale where id=#{id}
    </select>
 
+  <select id="getListNoPage" resultType="com.mingsheng.model.MobileSale">
+    SELECT * from mobileSale order BY  ctime DESC
+  </select>
+
+  <insert id="insert" parameterType="com.mingsheng.model.MobileSale">
+  INSERT INTO `mobileSale`
+(`id`,
+`mobileName`,
+`img`,
+`price`,
+`ctime`,
+`mobileType`,
+`mobileMemory`,
+`mobileColour`)
+VALUES
+(
+#{id},
+#{mobileName},
+#{img},
+#{price},
+#{ctime},
+#{mobileType},
+#{mobileMemory},
+#{mobileColour});
+  </insert>
+
+
 </mapper>

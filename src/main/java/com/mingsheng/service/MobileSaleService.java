@@ -51,4 +51,30 @@ public class MobileSaleService {
 
         return recovery;
     }
+
+    public List ListNoPage() {
+        List<MobileSale> list = mapper.getListNoPage();
+        List<MobileSale> list1 = new ArrayList<>();
+        for (MobileSale m:list) {
+            MobileSale mobileSale = new MobileSale();
+            mobileSale.setId(m.getId());
+            mobileSale.setMobileColour(m.getMobileColour());
+            mobileSale.setMobileMemory(m.getMobileMemory());
+            mobileSale.setMobileName(m.getMobileName());
+            mobileSale.setMobileType(m.getMobileType());
+            mobileSale.setPrice(m.getPrice());
+            mobileSale.setCtime(m.getCtime());
+            if(m.getImg()==null || m.getImg().length()<=0){
+                mobileSale.setImg(ImgUtils.defaultUrl);
+            }else {
+                mobileSale.setImg(ImgUtils.imgUrl+m.getImg());
+            }
+            list1.add(mobileSale);
+        }
+        return list1;
+    }
+
+    public void insert(MobileSale mobileSale) {
+        mapper.insert(mobileSale);
+    }
 }

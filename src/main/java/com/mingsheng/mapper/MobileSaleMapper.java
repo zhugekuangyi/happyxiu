@@ -18,4 +18,8 @@ public interface MobileSaleMapper {
                        @Param(value = "mobileColour") String mobileColour);
 
     MobileSale getInfoById(@Param(value = "id") String mobileId);
+
+    List<MobileSale> getListNoPage();
+
+    void insert(MobileSale mobileSale);
 }

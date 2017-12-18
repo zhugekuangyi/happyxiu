@@ -112,4 +112,7 @@
     <mvc:interceptors>
         <bean class="com.mingsheng.filter.SystemInterceptor"/>
     </mvc:interceptors>
+
+    <mvc:resources mapping="/static/**" location="web/static/"/>
+
 </beans>

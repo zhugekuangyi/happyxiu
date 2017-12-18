@@ -2,21 +2,20 @@ package com.mingsheng.controller;
 
 import com.mingsheng.model.*;
 import com.mingsheng.service.*;
-import com.mingsheng.utils.MyUUID;
-import com.mingsheng.utils.RespStatus;
-import com.mingsheng.utils.StringUtil;
-import com.mingsheng.utils.TokenUtil;
+import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "mobileSale")
@@ -40,6 +39,22 @@ public class MobileSaleController {
         List list =null;
         try {
             list = mobileSaleService.getList(page,10);
+            return RespStatus.success().element("list",list);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return RespStatus.fail("获取列表失败");
+        }
+
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "getListNoPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response){
+        List list =null;
+        try {
+            list = mobileSaleService.ListNoPage();
             return RespStatus.success().element("list",list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,6 +169,58 @@ public class MobileSaleController {
             return RespStatus.success().element("sale",recovery);
         }else {
             return RespStatus.fail("手机型号不支持购买");
+        }
+    }
+
+    @RequestMapping(value = "/createMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject createMobile(@RequestParam(value = "mobileType") String mobileType,
+                                   @RequestParam(value = "mobileName") String mobileName,
+                                   @RequestParam(value = "mobileMemory") String mobileMemory,
+                                   @RequestParam(value = "mobileColour") String mobileColour,
+                                   @RequestParam(value = "price") String price,
+                                   @RequestParam(value = "img") String img){
+
+        try {
+
+
+        if(img==null || img.trim().length()<0){
+            return RespStatus.fail("图片不能为空");
+        }
+        if(mobileName==null || mobileName.trim().length()<=0){
+            return RespStatus.fail("手机型号不能空");
+        }
+        if(mobileType==null || mobileType.trim().length()<=0){
+            return RespStatus.fail("手机厂商不能空");
+        }
+        if(mobileMemory==null || mobileMemory.trim().length()<=0){
+            return RespStatus.fail("手机内存不能空");
+        }
+        if(mobileColour==null || mobileColour.trim().length()<=0){
+            return RespStatus.fail("手机颜色不能空");
+        }
+        if(price==null || price.trim().length()<=0){
+            return RespStatus.fail("价格不能空");
+        }
+        MobileSale mobileSale = new MobileSale();
+        mobileSale.setId(MyUUID.getUUID());
+        mobileSale.setMobileColour(mobileColour);
+        mobileSale.setMobileName(mobileName);
+        mobileSale.setMobileType(mobileType);
+        mobileSale.setMobileMemory(mobileMemory);
+        mobileSale.setCtime(new Timestamp(System.currentTimeMillis()));
+        mobileSale.setPrice(Double.parseDouble(price));
+
+        Map<String, String> map = OSSUtil.baseToFile(img);
+        if("0".equals(map.get("code"))){
+            mobileSale.setImg(map.get("fileName"));
+        }else {
+            mobileSale.setImg("");
+        }
+        mobileSaleService.insert(mobileSale);
+            return RespStatus.success();
+        }catch (Exception e){
+            return RespStatus.fail("添加失败！");
         }
     }
 

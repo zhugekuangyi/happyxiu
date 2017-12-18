@@ -5,13 +5,16 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import sun.misc.BASE64Decoder;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
   * @Description: 阿里云OSS存储系统
@@ -34,7 +37,7 @@ public class OSSUtil {
      * <p>3：没有图片后缀名</p>
      * <p>4：图片上传大小超过500KB限制</p>
      */
-    public static Map<String, String> upload_img(CommonsMultipartFile file){
+    public static Map<String, String> upload_img(MultipartFile file){
     	Map<String, String> respMap = new HashMap<>();
     	String bucket_img = oss_bucket_img;
     	String code = "0";
@@ -80,6 +83,39 @@ public class OSSUtil {
     	respMap.put("fileName", fileName);
     	return respMap;
     }
+
+
+	public static Map<String, String> baseToFile(String path){
+		Map<String, String> respMap = new HashMap<>();
+		String bucket_img = oss_bucket_img;
+		String fileName="";
+		try {
+			String base64Img = path.replaceAll("data:image/jpeg;base64,", "");
+			BASE64Decoder decoder = new BASE64Decoder();
+			// Base64解码
+			byte[] b = decoder.decodeBuffer(base64Img);
+			for (int i = 0; i < b.length; ++i) {
+				if (b[i] < 0) {// 调整异常数据
+					b[i] += 256;
+				}
+			}
+
+			fileName = UUID.randomUUID()+".png";
+			InputStream in = new ByteArrayInputStream(b);
+			OSSClient ossClient = getOSSClient();
+        		/*if (ossClient.doesBucketExist(bucket_img)) {
+                } else {
+                	ossClient.createBucket(bucket_img);
+                }*/
+			ossClient.putObject(bucket_img, fileName, in);
+			ossClient.shutdown();
+		}catch (Exception e){
+
+		}
+		respMap.put("code", "0");
+		respMap.put("fileName", fileName);
+		return respMap;
+	}
 
     /**
      * 上传图片二维码专用

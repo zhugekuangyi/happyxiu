@@ -19,4 +19,6 @@ public interface StoreAddressMapper {
                 @Param(value = "ctime") Timestamp ctime);
 
     List<StoreAddress> getStoreAddress();
+
+    void del(@Param(value = "id") String id);
 }

@@ -21,4 +21,8 @@ public class StoreAddressService {
     public List<StoreAddress> getStoreAddress(){
         return mapper.getStoreAddress();
     }
+
+    public void del(String id) {
+        mapper.del(id);
+    }
 }

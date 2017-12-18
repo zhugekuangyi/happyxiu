@@ -1,8 +1,15 @@
 package com.mingsheng.controller;
 
+import com.mingsheng.utils.OSSUtil;
+import com.mingsheng.utils.RespStatus;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -93,5 +103,34 @@ public class PublicController {
         int g = s + random.nextInt(e - s);
         int b = s + random.nextInt(e - s);
         return new Color(r, g, b);
+    }
+
+
+    /**
+     * 图片上传
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject uploadImg(@RequestParam("img") CommonsMultipartFile image) {
+        String code ="";
+        String fileName="";
+        try {
+                if (image != null) {
+                    Map<String, String> dir = OSSUtil.upload_img(image);
+                    code = dir.get("code");
+                    fileName = dir.get("fileName");
+
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.fail("上传失败");
+        }
+        if (code.equals("0")) {
+            return RespStatus.success().element("imgs", fileName);
+        }else {
+            return RespStatus.fail("上传失败");
+        }
     }
 }
