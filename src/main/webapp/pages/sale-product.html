@@ -57,7 +57,7 @@
     window.onload=function(){
         $.ajax({
             type: 'POST',
-            url :'http://localhost:8080/mobileSale/getListNoPage',
+            url :'http://39.106.27.66/mobileSale/getListNoPage',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
@@ -74,7 +74,7 @@
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/store/del?id='+id,
+                url: 'http://39.106.27.66/store/del?id='+id,
                 dataType: 'json',
                 success: function(data){
                     layer.msg('已删除!',{icon:1,time:1000});

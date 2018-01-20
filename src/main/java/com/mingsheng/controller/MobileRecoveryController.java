@@ -121,9 +121,8 @@ public class MobileRecoveryController {
             }else {
                 order.setRemark(remark);
             }
-
             recoveryOrderService.insert(order);
-
+            SmsUtils.veriOrder("13957128430",phone,userAddress.getAddress(),"回收",mobileType.getName()+"/"+mobileName.getName());
             return RespStatus.success();
         } catch (Exception e) {
             e.printStackTrace();

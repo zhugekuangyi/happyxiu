@@ -2,10 +2,7 @@ package com.mingsheng.controller;
 
 import com.mingsheng.model.*;
 import com.mingsheng.service.*;
-import com.mingsheng.utils.MyUUID;
-import com.mingsheng.utils.RespStatus;
-import com.mingsheng.utils.StringUtil;
-import com.mingsheng.utils.TokenUtil;
+import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,6 +137,7 @@ public class MobileRepairController {
                 order.setRemark(remark);
             }
             orderService.insert(order);
+            SmsUtils.veriOrder("13957128430",phone,userAddress.getAddress(),"维修",mobileType.getName()+"/"+mobileName.getName()+"/"+mobileColour.getName());
 
         return RespStatus.success();
 
