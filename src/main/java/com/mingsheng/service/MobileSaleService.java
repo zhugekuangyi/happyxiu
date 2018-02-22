@@ -77,4 +77,9 @@ public class MobileSaleService {
     public void insert(MobileSale mobileSale) {
         mapper.insert(mobileSale);
     }
+
+    public void del(String id) {
+        mapper.del(id);
+    }
+
 }

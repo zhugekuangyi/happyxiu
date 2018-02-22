@@ -62,7 +62,7 @@
                 if(data.return_code==0){
                     var list = data.list;
                     for(var index = 0,l = list.length;index<l;index++){
-                        $("#store").append("<tr class=\"text-c\"> <td>"+list[index].mobileType+"</td><td>"+list[index].mobileName+"</td><td>"+list[index].mobileMemory+"</td> <td>"+list[index].mobileColour+"</td> <td><img height='50' width='50' src=\""+list[index].img+"\"></td><td>"+list[index].price+"</td><td><input type=\"button\" onclick=\"article_del("+list[index].id+")\" value=\"删除\"/></td></tr>")
+                        $("#store").append("<tr class=\"text-c\"> <td>"+list[index].mobileType+"</td><td>"+list[index].mobileName+"</td><td>"+list[index].mobileMemory+"</td> <td>"+list[index].mobileColour+"</td> <td><img height='50' width='50' src=\""+list[index].img+"\"></td><td>"+list[index].price+"</td><td><input type=\"button\" onclick=\"del("+list[index].id+")\" value=\"删除\"/></td></tr>")
                     }
                 }else {
                     alert("获取列表失败");
@@ -70,16 +70,16 @@
             }
         })
     }
-    function article_del(id){
+    function del(id){
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'GET',
-                url: 'http://39.106.27.66/store/del?id='+id,
+                url: 'http://localhost:8080/mobileSale/del?id='+id,
                 dataType: 'json',
                 success: function(data){
                     layer.msg('已删除!',{icon:1,time:1000});
                     if(data.return_code==0){
-                        window.location.href="article-list.html";
+                        window.location.href="sale-product.html";
                     }
                 },
                 error:function(data) {

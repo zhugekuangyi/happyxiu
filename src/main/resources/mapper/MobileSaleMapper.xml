@@ -49,5 +49,7 @@ VALUES
 #{mobileColour});
   </insert>
 
-
+<delete id="del" parameterType="String">
+  DELETE FROM mobileSale where id=#{id}
+</delete>
 </mapper>

@@ -22,4 +22,6 @@ public interface MobileSaleMapper {
     List<MobileSale> getListNoPage();
 
     void insert(MobileSale mobileSale);
+
+    void del(@Param(value = "id") String id);
 }

@@ -204,7 +204,7 @@ public class MobileSaleController {
             return RespStatus.fail("价格不能空");
         }
         MobileSale mobileSale = new MobileSale();
-        mobileSale.setId(MyUUID.getUUID());
+        mobileSale.setId(MathUtil.getId());
         mobileSale.setMobileColour(mobileColour);
         mobileSale.setMobileName(mobileName);
         mobileSale.setMobileType(mobileType);
@@ -222,6 +222,18 @@ public class MobileSaleController {
             return RespStatus.success();
         }catch (Exception e){
             return RespStatus.fail("添加失败！");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public JSONObject delStore(@RequestParam(value = "id") String id){
+        try {
+            mobileSaleService.del(id);
+            return RespStatus.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return RespStatus.fail("删除失败");
         }
     }
 
