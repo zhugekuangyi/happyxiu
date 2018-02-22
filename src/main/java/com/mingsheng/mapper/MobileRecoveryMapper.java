@@ -14,4 +14,8 @@ public interface MobileRecoveryMapper {
     MobileRecovery getInfo(@Param(value = "mobileType") String pid, @Param(value = "mobileName") String id);
 
     MobileRecovery getInfoById(@Param(value = "id") String mobileId);
+
+    List<MobileRecovery> getListNoPage();
+
+    void del(@Param(value = "id") String id);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,21 @@ public class MobileRecoveryController {
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.fail("获取回收列表失败");
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getListNoPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response){
+        List list =null;
+        try {
+            list = mobileRecoveryService.ListNoPage();
+            return RespStatus.success().element("list",list);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return RespStatus.fail("获取列表失败");
         }
 
     }
@@ -169,6 +185,18 @@ public class MobileRecoveryController {
             return RespStatus.success().element("recovery",map);
         }else {
             return RespStatus.fail("手机型号不支持回收");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public JSONObject delStore(@RequestParam(value = "id") String id){
+        try {
+            mobileRecoveryService.del(id);
+            return RespStatus.success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return RespStatus.fail("删除失败");
         }
     }
 
