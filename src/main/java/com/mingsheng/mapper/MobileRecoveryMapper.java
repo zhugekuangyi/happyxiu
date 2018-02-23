@@ -18,4 +18,6 @@ public interface MobileRecoveryMapper {
     List<MobileRecovery> getListNoPage();
 
     void del(@Param(value = "id") String id);
+
+    void insert(MobileRecovery mobileRecovery);
 }

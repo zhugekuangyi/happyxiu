@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
-	<title>新增图片</title>
+	<title>新增回收商品</title>
 	<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -29,12 +29,12 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机厂商：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
-				<select name="" class="select">
-					<option value="0">苹果</option>
-					<option value="1">三星</option>
-					<option value="11">华为</option>
-					<option value="12"></option>
-					<option value="13">├行业新闻</option>
+				<select id="mobileType" name="mobileType" class="select">
+					<!--<option value="0">苹果</option>-->
+					<!--<option value="1">三星</option>-->
+					<!--<option value="11">华为</option>-->
+					<!--<option value="12"></option>-->
+					<!--<option value="13"></option>-->
 				</select>
 				</span>
 			</div>
@@ -43,12 +43,12 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机型号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
-				<select name="" class="select">
-					<option value="0">iphone7</option>
-					<option value="1">iphone8</option>
-					<option value="11">iphoneX</option>
-					<option value="12">├行业资讯</option>
-					<option value="13">├行业新闻</option>
+				<select id="mobileName" class="select">
+					<!--<option value="0">iphone7</option>-->
+					<!--<option value="1">iphone8</option>-->
+					<!--<option value="11">iphoneX</option>-->
+					<!--<option value="12"></option>-->
+					<!--<option value="13"></option>-->
 				</select>
 				</span>
 			</div>
@@ -102,7 +102,62 @@
 <script type="text/javascript" src="lib/webuploader/0.1.5/webuploader.min.js"></script>
 <script type="text/javascript">
 
+    window.onload=function(){
+        $.ajax({
+            type: 'POST',
+            url :'http://39.106.27.66/mobile/getList?status=1',
+            success:function(data){
+                if(data.return_code==0){
+                    var list = data.list;
+                    for(var index = 0,l = list.length;index<l;index++){
+                        $("#mobileType").append("<option value=\""+list[index].id+"\">"+list[index].name+"</option>")
+                    }
+
+                }else {
+                    alert("获取列表失败");
+                }
+            }
+        })
+        $.ajax({
+            type: 'POST',
+            data:{"mobileId": "jGswJ9qq"},
+            dataType:'json',
+            url :'http://39.106.27.66/mobile/getListByMobile',
+            success:function(data){
+                if(data.return_code==0){
+                    var list = data.list;
+                    for(var index = 0,l = list.length;index<l;index++){
+                        $("#mobileName").append("<option value=\""+list[index].id+"\">"+list[index].name+"</option>")
+                    }
+                }else {
+                        alert("获取列表失败");
+                }
+            }
+        })
+    }
     $(function(){
+        $("select[name='mobileType']").change(function(){
+            $("#mobileName").empty();
+            var options=$("#mobileType option:selected");
+            var mobileId = options.val();
+            $.ajax({
+                type: 'POST',
+                data:{"mobileId": mobileId},
+				dataType:'json',
+                url :'http://39.106.27.66/mobile/getListByMobile',
+                success:function(data){
+                    if(data.return_code==0){
+                        var list = data.list;
+                        for(var index = 0,l = list.length;index<l;index++){
+                            $("#mobileName").append("<option value=\""+list[index].id+"\">"+list[index].name+"</option>")
+                        }
+                    }else {
+                        alert("获取列表失败");
+                    }
+                }
+            })
+        });
+
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
@@ -766,9 +821,16 @@
     
     function article_save_submit() {
 		var formData = new FormData($('#form-article-add')[0]);
-		var url = "http://39.106.27.66/mobileSale/createMobile";
+		var url = "http://39.106.27.66/mobileRecovery/createMobile";
 		var img = $('img').attr('src');
+//        var options=$("#mobileType option:selected");
+//        var mobileType = options.val();
+
+        var option=$("#mobileName option:selected");
+        var mobileName = option.val();
         formData.append('img',img);
+        formData.append('mobileName',mobileName);
+//        formData.append('mobileType',mobileType);
         console.log(formData)
         $.ajax({
             url:url,
@@ -779,7 +841,7 @@
 			contentType: false,
 			success:function (data) {
 				if(data.return_code==0){
-				    window.location.href="sale-product.html";
+				    window.location.href="recovery-product.html";
 				}else {
 				    alert("添加失败！");
 				}

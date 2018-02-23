@@ -76,6 +76,7 @@
             $.ajax({
                 type: 'GET',
                 url: 'http://39.106.27.66/mobileRecovery/del?id='+id,
+//                url: 'http://localhost:8080/mobileRecovery/del?id='+id,
                 dataType: 'json',
                 success: function(data){
                     layer.msg('已删除!',{icon:1,time:1000});

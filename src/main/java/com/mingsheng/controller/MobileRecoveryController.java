@@ -188,6 +188,48 @@ public class MobileRecoveryController {
         }
     }
 
+    @RequestMapping(value = "/createMobile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject createMobile(@RequestParam(value = "mobileType") String mobileType,
+                                   @RequestParam(value = "mobileName") String mobileName,
+                                   @RequestParam(value = "price") String price,
+                                   @RequestParam(value = "img") String img){
+
+        try {
+
+
+            if(img==null || img.trim().length()<0){
+                return RespStatus.fail("图片不能为空");
+            }
+            if(mobileName==null || mobileName.trim().length()<=0){
+                return RespStatus.fail("手机型号不能空");
+            }
+            if(mobileType==null || mobileType.trim().length()<=0){
+                return RespStatus.fail("手机厂商不能空");
+            }
+            if(price==null || price.trim().length()<=0){
+                return RespStatus.fail("价格不能空");
+            }
+            MobileRecovery mobileRecovery = new MobileRecovery();
+            mobileRecovery.setId(MathUtil.getId());
+            mobileRecovery.setMobileName(mobileName);
+            mobileRecovery.setMobileType(mobileType);
+            mobileRecovery.setCtime(new Timestamp(System.currentTimeMillis()));
+            mobileRecovery.setPrice(Double.parseDouble(price));
+
+            Map<String, String> map = OSSUtil.baseToFile(img);
+            if("0".equals(map.get("code"))){
+                mobileRecovery.setImg(map.get("fileName"));
+            }else {
+                mobileRecovery.setImg("");
+            }
+            mobileRecoveryService.insert(mobileRecovery);
+            return RespStatus.success();
+        }catch (Exception e){
+            return RespStatus.fail("添加失败！");
+        }
+    }
+
     @ResponseBody
     @RequestMapping(value = "/del", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public JSONObject delStore(@RequestParam(value = "id") String id){

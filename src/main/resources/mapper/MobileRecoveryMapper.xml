@@ -30,4 +30,11 @@
     DELETE FROM mobileRecovery where id=#{id}
   </delete>
 
+  <insert id="insert" parameterType="com.mingsheng.model.MobileRecovery">
+  INSERT INTO `mobileRecovery` (`id`, `mobileName`, `img`, `price`, `ctime`, `mobileType`)
+  VALUES
+	(#{id}, #{mobileName}, #{img}, #{price}, #{ctime}, #{mobileType});
+
+  </insert>
+
 </mapper>

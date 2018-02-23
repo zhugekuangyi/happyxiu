@@ -79,4 +79,8 @@ public class MobileRecoveryService {
     public void del(String id) {
         mapper.del(id);
     }
+
+    public void insert(MobileRecovery mobileRecovery) {
+        mapper.insert(mobileRecovery);
+    }
 }

@@ -65,7 +65,7 @@ public class MobileTypeController {
         List<MobileType> mobileTypeList = null;
         try {
             if(mobileId==null || mobileId.trim().length()<=0){
-                return RespStatus.fail("token不能为空");
+                return RespStatus.fail("手机厂商不能为空");
             }
            mobileTypeList = mobileTypeService.getListByPid(mobileId);
         } catch (Exception e) {
