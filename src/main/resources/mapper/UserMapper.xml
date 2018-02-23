@@ -35,4 +35,8 @@
   <update id="updateByPhone" parameterType="String">
     update user set password=#{password} where phone=#{phone}
   </update>
+
+  <select id="getUserList" resultType="com.mingsheng.model.User">
+    SELECT * from user where isDel=0 ORDER by ctime DESC;
+  </select>
 </mapper>

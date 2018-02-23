@@ -568,6 +568,34 @@ public class UserController {
             return RespStatus.fail("获取失败！");
         }
     }
+    @RequestMapping(value = "/getUserList",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject getUserList(){
+        List<User> userList = userService.getUserList();
+        List<Map<String,Object>> mapList = new ArrayList<>();
+        for (User user:userList) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("phone",user.getPhone());
+            map.put("nickname",user.getNickname());
+            map.put("id",user.getId());
+            map.put("time",user.getCtime().toString());
+            if(user.getSex()==0){
+                map.put("sex","男");
+            }else {
+                map.put("sex","女");
+            }
+            UserAddress addr = userAddressService.getDefaultAddr(user.getId());
+            if(addr!=null){
+                map.put("address",addr.getArea()+" "+addr.getAddress());
+            }else {
+                map.put("address","");
+            }
+
+            mapList.add(map);
+        }
+        return RespStatus.success().element("list",mapList);
+    }
+
 
 
 }

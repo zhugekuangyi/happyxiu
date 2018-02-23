@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by zl on 2015/8/27.
@@ -24,4 +25,6 @@ public interface UserMapper {
     User getUserById(@Param(value = "userId") String id);
 
     void updateByPhone(@Param(value = "phone") String phone,@Param(value = "password") String password);
+
+    List<User> getUserList();
 }
