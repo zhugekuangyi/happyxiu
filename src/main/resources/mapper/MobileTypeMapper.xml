@@ -15,4 +15,12 @@
   <select id="getInfoById" parameterType="String" resultType="com.mingsheng.model.MobileType">
     SELECT * from mobiletype where id=#{id}
   </select>
+
+  <select id="getMobileList" resultType="com.mingsheng.model.MobileType">
+    SELECT * from mobiletype where levei=1 ORDER by ctime ASC;
+  </select>
+
+  <delete id="del" parameterType="String">
+    DELETE FROM mobiletype where id=#{id}
+  </delete>
 </mapper>

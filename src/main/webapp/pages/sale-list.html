@@ -23,7 +23,7 @@
 <title>订单列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 维修订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 商城订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
@@ -34,8 +34,8 @@
 					<th width="50">手机号</th>
 					<th width="60">地址</th>
 					<th width="60">手机型号</th>
-					<th width="90">故障信息</th>
-					<th width="60">维修方式</th>
+					<th width="90">价格</th>
+					<th width="60">送货方式</th>
 					<th width="60">备注</th>
 					<th width="60">创建时间</th>
 				</tr>
@@ -60,13 +60,13 @@
     window.onload=function(){
         $.ajax({
             type: 'POST',
-            url :'http://39.106.27.66/mobileRepair/getList',
-//            url :'http://localhost:8080/mobileRepair/getList',
+            url :'http://39.106.27.66/mobileSale/getSaleList',
+//            url :'http://localhost:8080/mobileSale/getSaleList',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
                     for(var index = 0,l = list.length;index<l;index++){
-                        $("#repair-list").append("<tr class=\"text-c\"> <td>"+list[index].orderNo+"</td><td>"+list[index].name+"</td><td>"+list[index].phone+"</td><td>"+list[index].address+"</td><td>"+list[index].mobileType+"/"+list[index].mobileName+"/"+list[index].mobileColour+"</td><td>"+list[index].question+"</td><td>"+list[index].orderStatus+"</td><td>"+list[index].remark+"</td> <td>"+list[index].time+"</td></tr>")
+                        $("#repair-list").append("<tr class=\"text-c\"> <td>"+list[index].orderNo+"</td><td>"+list[index].name+"</td><td>"+list[index].phone+"</td><td>"+list[index].address+"</td><td>"+list[index].mobileType+"/"+list[index].mobileName+"/"+list[index].mobileColour+"/"+list[index].mobileMemory+"</td><td>"+list[index].price+"</td><td>"+list[index].orderStatus+"</td><td>"+list[index].remark+"</td> <td>"+list[index].time+"</td></tr>")
                     }
                 }else {
                     alert("获取列表失败");

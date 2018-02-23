@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -235,6 +237,43 @@ public class MobileSaleController {
             e.printStackTrace();
             return RespStatus.fail("删除失败");
         }
+    }
+
+    @RequestMapping(value = "getSaleList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject getList(){
+        List<Map<String,Object>> list=new ArrayList<>();
+        try {
+            List<SaleOrder> orders = saleOrderService.getList();
+            for (SaleOrder order:orders) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("orderNo",order.getOrderNo());
+                map.put("name",order.getName());
+                map.put("phone",order.getPhone());
+                map.put("mobileType",order.getMobileType());
+                map.put("mobileName",order.getMobileName());
+                map.put("mobileColour",order.getMobileColour());
+                map.put("mobileMemory",order.getMobileMemory());
+                map.put("address",order.getAddress());
+                map.put("price",order.getPrice());
+                map.put("time",order.getCtime().toString());
+                map.put("remark",order.getRemark());
+                if(0==order.getOrderStatus()){
+                    map.put("orderStatus","到店购买");
+                }else if(1==order.getOrderStatus()){
+                    map.put("orderStatus","送货上门");
+                }else {
+                    map.put("orderStatus","快递");
+                }
+
+                list.add(map);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return RespStatus.fail();
+        }
+
+        return RespStatus.success().element("list",list);
     }
 
 

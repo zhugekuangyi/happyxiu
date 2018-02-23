@@ -3,6 +3,7 @@ package com.mingsheng.controller;
 import com.mingsheng.model.MobileType;
 import com.mingsheng.service.MobileTypeService;
 import com.mingsheng.utils.RespStatus;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "mobile")
@@ -128,5 +131,40 @@ public class MobileTypeController {
         return RespStatus.success().element("list",mobileTypeList);
 
 
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "getMobileType", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public JSONObject getList(){
+        List<MobileType> list = mobileTypeService.getMobileList();
+        List<Map<String,Object>> mapList = new ArrayList<>();
+         for (MobileType mt:list) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("name",mt.getName());
+            map.put("id",mt.getId());
+            if(mt.getStatus()==0){
+                map.put("status","维修");
+            }else {
+                map.put("status","回收");
+            }
+            mapList.add(map);
+        }
+        return RespStatus.success().element("list",mapList);
+    }
+
+    @RequestMapping(value = "del",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject del(String id){
+
+        try {
+            if(id==null){
+                return RespStatus.fail("传入的ID不能为空");
+            }
+            mobileTypeService.del(id);
+        }catch (Exception e){
+            return RespStatus.fail("删除失败");
+        }
+        return RespStatus.success();
     }
 }

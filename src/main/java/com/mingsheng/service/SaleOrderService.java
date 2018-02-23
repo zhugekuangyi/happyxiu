@@ -26,4 +26,8 @@ public class SaleOrderService {
     public SaleOrder getOrderById(String orderId){
         return mapper.getOrderById(orderId);
     }
+
+    public List<SaleOrder> getList() {
+        return mapper.getList();
+    }
 }

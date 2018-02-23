@@ -196,6 +196,14 @@ public class MobileRepairController {
                 map.put("question",s+"/"+question.getDescription());
                 map.put("time",question.getCtime().toString());
                 map.put("remark",order.getRemark());
+                if(0==order.getOrderStatus()){
+                    map.put("orderStatus","到店维修");
+                }else if(1==order.getOrderStatus()){
+                    map.put("orderStatus","上门维修");
+                }else {
+                    map.put("orderStatus","快递");
+                }
+
                 list.add(map);
             }
         }catch (Exception e){

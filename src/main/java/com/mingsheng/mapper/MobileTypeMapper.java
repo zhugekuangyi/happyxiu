@@ -15,4 +15,7 @@ public interface MobileTypeMapper {
 
     MobileType getInfoById(@Param(value = "id") String id);
 
+    List<MobileType> getMobileList();
+
+    void del(@Param(value = "id") String id);
 }

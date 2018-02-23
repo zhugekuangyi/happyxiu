@@ -29,4 +29,12 @@ public class MobileTypeService {
         return mobileTypeMapper.getInfoById(id);
     }
 
+    public List<MobileType> getMobileList() {
+
+        return mobileTypeMapper.getMobileList();
+    }
+
+    public void del(String id) {
+        mobileTypeMapper.del(id);
+    }
 }

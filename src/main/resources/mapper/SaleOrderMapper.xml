@@ -20,4 +20,8 @@ VALUES
     SELECT * FROM `saleorder` where id=#{id} and isDel=0
   </select>
 
+  <select id="getList" resultType="com.mingsheng.model.SaleOrder">
+    SELECT * FROM  saleorder where isDel=0 ORDER BY ctime DESC ;
+  </select>
+
 </mapper>
