@@ -14,4 +14,6 @@ public interface RecoveryOrderMapper {
     List<RecoveryOrder> getListByUserId(@Param(value = "userId") String id);
 
     RecoveryOrder getOrderById(@Param(value = "id") String orderId);
+
+    List<RecoveryOrder> getList();
 }

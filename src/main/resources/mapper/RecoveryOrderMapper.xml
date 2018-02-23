@@ -15,4 +15,8 @@ VALUES
 	<select id="getOrderById" parameterType="String" resultType="com.mingsheng.model.RecoveryOrder">
 		SELECT * FROM  `recoveryorder`where id=#{id} and isDel=0
 	</select>
+
+	<select id="getList" resultType="com.mingsheng.model.RecoveryOrder">
+		SELECT * FROM `recoveryorder` where isDel=0 ORDER BY ctime DESC;
+	</select>
 </mapper>

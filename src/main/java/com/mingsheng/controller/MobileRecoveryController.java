@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -241,5 +242,42 @@ public class MobileRecoveryController {
             return RespStatus.fail("删除失败");
         }
     }
+
+
+    @RequestMapping(value = "getRecoveryList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject getList(){
+        List<Map<String,Object>> list=new ArrayList<>();
+        try {
+            List<RecoveryOrder> orders = recoveryOrderService.getList();
+            for (RecoveryOrder order:orders) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("orderNo",order.getOrderNo());
+                map.put("name",order.getName());
+                map.put("phone",order.getPhone());
+                map.put("mobileType",order.getMobileType());
+                map.put("mobileName",order.getMobileName());
+                map.put("address",order.getAddress());
+                map.put("price",order.getPrice());
+                map.put("time",order.getCtime().toString());
+                map.put("remark",order.getRemark());
+                if(0==order.getOrderStatus()){
+                    map.put("orderStatus","到店回收");
+                }else if(1==order.getOrderStatus()){
+                    map.put("orderStatus","上门回收");
+                }else {
+                    map.put("orderStatus","快递");
+                }
+
+                list.add(map);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return RespStatus.fail();
+        }
+
+        return RespStatus.success().element("list",list);
+    }
+
 
 }
