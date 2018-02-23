@@ -46,7 +46,7 @@ public class SmsUtils {
         //必填:待发送手机号
         request.setPhoneNumbers(phone);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("蜂鸟快修");
+        request.setSignName("快乐修");
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode("SMS_121856268");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
@@ -77,7 +77,7 @@ public class SmsUtils {
         //必填:待发送手机号
         request.setPhoneNumbers(mobile);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("蜂鸟快修");
+        request.setSignName("快乐修");
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode("SMS_121911227");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
@@ -96,7 +96,9 @@ public class SmsUtils {
 	public static void main(String[] args) throws ClientException {
 //        veriCode("18606716927", "1234");
 
-		veriCode("13957128430","1234");
+//		veriCode("13957128430","1234");
+
+		veriOrder("13957128430","1234567","11","21","121");
 	}
 
 }

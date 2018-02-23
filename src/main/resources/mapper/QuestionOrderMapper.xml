@@ -16,4 +16,8 @@
     <select id="getOrderById" parameterType="String" resultType="com.mingsheng.model.QuestionOrder">
         SELECT * FROM  questionorder where id=#{id} and isDel=0
     </select>
+
+    <select id="getList" resultType="com.mingsheng.model.QuestionOrder">
+        SELECT * FROM questionorder order BY ctime DESC
+    </select>
 </mapper>

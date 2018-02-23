@@ -128,7 +128,7 @@ public class MobileSaleController {
             }
 
             saleOrderService.insert(order);
-            SmsUtils.veriOrder("13957128430",phone,userAddress.getAddress(),"维修",mobileSale.getMobileType()+"/"+mobileSale.getMobileName()+"/"+mobileSale.getMobileColour()+"/"+mobileSale.getMobileMemory());
+            SmsUtils.veriOrder("13685753795",phone,userAddress.getAddress(),"维修",mobileSale.getMobileType()+"/"+mobileSale.getMobileName()+"/"+mobileSale.getMobileColour()+"/"+mobileSale.getMobileMemory());
 
             return RespStatus.success();
         } catch (Exception e) {

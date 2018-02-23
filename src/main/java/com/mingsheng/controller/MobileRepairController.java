@@ -2,6 +2,11 @@ package com.mingsheng.controller;
 
 import com.mingsheng.model.*;
 import com.mingsheng.service.*;
+import com.mingsheng.utils.MyUUID;
+import com.mingsheng.utils.RespStatus;
+import com.mingsheng.utils.StringUtil;
+import com.mingsheng.utils.TokenUtil;
+import javafx.beans.binding.ObjectExpression;
 import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "mobileRepair")
@@ -32,6 +40,8 @@ public class MobileRepairController {
     private QuestionOrderService orderService;
     @Autowired
     private CodeService codeService;
+    @Autowired
+    private QuestionOrderService questionOrderService;
 
 
     @ResponseBody
@@ -137,7 +147,7 @@ public class MobileRepairController {
                 order.setRemark(remark);
             }
             orderService.insert(order);
-            SmsUtils.veriOrder("13957128430",phone,userAddress.getAddress(),"维修",mobileType.getName()+"/"+mobileName.getName()+"/"+mobileColour.getName());
+            SmsUtils.veriOrder("13685753795",phone,userAddress.getAddress(),"维修",mobileType.getName()+"/"+mobileName.getName()+"/"+mobileColour.getName());
 
         return RespStatus.success();
 
@@ -146,5 +156,53 @@ public class MobileRepairController {
 
             return RespStatus.fail("获取方案错误");
         }
+    }
+
+
+    @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JSONObject getRepairList(){
+        List<Map<String,Object>> list=new ArrayList<>();
+        try {
+            List<QuestionOrder> orders = questionOrderService.getList();
+            for (QuestionOrder order:orders) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("orderNo",order.getOrderNo());
+                map.put("name",order.getName());
+                map.put("phone",order.getPhone());
+                map.put("mobileType",order.getMobileType());
+                map.put("mobileName",order.getMobileName());
+                map.put("mobileColour",order.getMobileColour());
+                map.put("address",order.getAddress());
+                Question question = questionService.selectResultById(order.getQuestionId());
+                String s ="";
+                if("1".equals(question.getQuestionType())){
+                    s="屏幕问题";
+                }else if("2".equals(question.getQuestionType())){
+                    s="外壳问题";
+                }else if("3".equals(question.getQuestionType())){
+                    s="电池问题";
+                }else if("4".equals(question.getQuestionType())){
+                    s="声音问题";
+                }else if("5".equals(question.getQuestionType())){
+                    s="按键问题";
+                }else if("6".equals(question.getQuestionType())){
+                    s="摄像拍照";
+                }else if("7".equals(question.getQuestionType())){
+                    s="内存神经";
+                }else {
+                    s="其他问题";
+                }
+                map.put("question",s+"/"+question.getDescription());
+                map.put("time",question.getCtime().toString());
+                map.put("remark",order.getRemark());
+                list.add(map);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return RespStatus.fail();
+        }
+
+        return RespStatus.success().element("list",list);
     }
 }

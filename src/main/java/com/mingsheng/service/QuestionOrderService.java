@@ -26,4 +26,8 @@ public class QuestionOrderService {
     public QuestionOrder getOrderById(String orderId){
         return mapper.getOrderById(orderId);
     }
+
+    public List<QuestionOrder> getList() {
+        return mapper.getList();
+    }
 }

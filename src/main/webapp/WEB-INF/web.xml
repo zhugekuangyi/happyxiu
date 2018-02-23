@@ -92,4 +92,13 @@
     <session-timeout>120</session-timeout>
   </session-config>
 
+  <display-name>webapp</display-name>
+  <description>
+    webapp
+  </description>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/</location>
+  </error-page>
+
 </web-app>
