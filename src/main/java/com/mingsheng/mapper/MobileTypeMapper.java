@@ -4,6 +4,7 @@ import com.mingsheng.model.MobileType;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -18,4 +19,6 @@ public interface MobileTypeMapper {
     List<MobileType> getMobileList();
 
     void del(@Param(value = "id") String id);
+
+    void insert(MobileType mobileType);
 }

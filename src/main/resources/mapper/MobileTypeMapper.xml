@@ -23,4 +23,11 @@
   <delete id="del" parameterType="String">
     DELETE FROM mobiletype where id=#{id}
   </delete>
+
+  <insert id="insert" parameterType="com.mingsheng.model.MobileType">
+    INSERT INTO `mobiletype` (`id`, `name`, `levei`, `pid`, `ctime`, `status`)
+VALUES
+	(#{id}, #{name}, #{levei}, #{pid}, #{ctime}, #{status});
+
+  </insert>
 </mapper>

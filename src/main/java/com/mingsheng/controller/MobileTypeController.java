@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -29,11 +30,12 @@ public class MobileTypeController {
       * @return
      */
     @ResponseBody
-    @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getList(Integer status){
 
         List<MobileType> list = null;
         List<MobileType> listByPid;
+        List<Map<String,Object>> mapList = new ArrayList<>();
         try {
           if(status ==null){
               return RespStatus.fail("查询状态不能为空");
@@ -46,14 +48,38 @@ public class MobileTypeController {
             }else {
                 listByPid=new ArrayList<>();
             }
+
+            for (MobileType mt:list) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("name",mt.getName());
+                map.put("time",mt.getCtime().toString());
+                map.put("id",mt.getId());
+                mapList.add(map);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.exception();
         }
 
-        return RespStatus.success().element("list",list).element("listDetail",listByPid);
+        return RespStatus.success().element("list",mapList).element("listDetail",listByPid);
 
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "saveMobileType",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject saveMobileType(@RequestParam(value = "mobileType") String mobileType,@RequestParam(value = "status") Integer status){
+        try {
+
+
+        if(mobileType==null || mobileType==""){
+            return RespStatus.fail("手机品牌不能为空");
+        }
+        mobileTypeService.saveMobile(status,mobileType,1,"");
+        }catch (Exception e){
+            return RespStatus.fail("添加失败！");
+        }
+        return RespStatus.success();
     }
 
     /**
