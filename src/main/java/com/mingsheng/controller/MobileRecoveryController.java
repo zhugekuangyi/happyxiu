@@ -4,6 +4,7 @@ import com.mingsheng.model.*;
 import com.mingsheng.service.*;
 import com.mingsheng.utils.*;
 import net.sf.json.JSONObject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -246,10 +247,10 @@ public class MobileRecoveryController {
 
     @RequestMapping(value = "getRecoveryList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject getList(){
+    public JSONObject getList(@RequestParam(value = "phone") String phone){
         List<Map<String,Object>> list=new ArrayList<>();
         try {
-            List<RecoveryOrder> orders = recoveryOrderService.getList();
+            List<RecoveryOrder> orders = recoveryOrderService.getList(phone);
             for (RecoveryOrder order:orders) {
                 Map<String,Object> map = new HashMap<>();
                 map.put("orderNo",order.getOrderNo());

@@ -17,7 +17,11 @@
         SELECT * FROM  questionorder where id=#{id} and isDel=0
     </select>
 
-    <select id="getList" resultType="com.mingsheng.model.QuestionOrder">
-        SELECT * FROM questionorder order BY ctime DESC
+    <select id="getList" parameterType="String" resultType="com.mingsheng.model.QuestionOrder">
+        SELECT * FROM questionorder where isDel=0
+        <if  test="phone != null and phone!='' ">
+            AND phone LIKE  concat('%',#{phone},'%')
+        </if>
+        order BY ctime DESC
     </select>
 </mapper>

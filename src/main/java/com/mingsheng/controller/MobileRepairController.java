@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -161,10 +162,10 @@ public class MobileRepairController {
 
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject getRepairList(){
+    public JSONObject getRepairList(@RequestParam(value = "phone") String phone){
         List<Map<String,Object>> list=new ArrayList<>();
         try {
-            List<QuestionOrder> orders = questionOrderService.getList();
+            List<QuestionOrder> orders = questionOrderService.getList(phone);
             for (QuestionOrder order:orders) {
                 Map<String,Object> map = new HashMap<>();
                 map.put("orderNo",order.getOrderNo());

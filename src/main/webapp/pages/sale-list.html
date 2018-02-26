@@ -25,6 +25,10 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 商城订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
+	<div class="text-c">
+	<input type="text" class="input-text" style="width:250px" placeholder="输入会员电话" id="name" name="name">
+	<input type="button" class="btn btn-success radius" id="search" name="search" value="搜订单" onclick="search()"><i class="Hui-iconfont"></i></input>
+	</div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
@@ -58,8 +62,30 @@
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     window.onload=function(){
+        var phone='';
         $.ajax({
             type: 'POST',
+            data:{'phone':phone},
+            url :'http://39.106.27.66/mobileSale/getSaleList',
+//            url :'http://localhost:8080/mobileSale/getSaleList',
+            success:function(data){
+                if(data.return_code==0){
+                    var list = data.list;
+                    for(var index = 0,l = list.length;index<l;index++){
+                        $("#repair-list").append("<tr class=\"text-c\"> <td>"+list[index].orderNo+"</td><td>"+list[index].name+"</td><td>"+list[index].phone+"</td><td>"+list[index].address+"</td><td>"+list[index].mobileType+"/"+list[index].mobileName+"/"+list[index].mobileColour+"/"+list[index].mobileMemory+"</td><td>"+list[index].price+"</td><td>"+list[index].orderStatus+"</td><td>"+list[index].remark+"</td> <td>"+list[index].time+"</td></tr>")
+                    }
+                }else {
+                    alert("获取列表失败");
+                }
+            }
+        })
+    };
+	function search() {
+		var phone = $('#name').val();
+        $("#repair-list").empty();
+        $.ajax({
+            type: 'POST',
+			data:{'phone':phone},
             url :'http://39.106.27.66/mobileSale/getSaleList',
 //            url :'http://localhost:8080/mobileSale/getSaleList',
             success:function(data){

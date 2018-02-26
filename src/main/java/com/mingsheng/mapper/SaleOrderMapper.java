@@ -15,5 +15,5 @@ public interface SaleOrderMapper {
 
     SaleOrder getOrderById(@Param(value = "id") String orderId);
 
-    List<SaleOrder> getList();
+    List<SaleOrder> getList(@Param(value = "phone") String phone);
 }

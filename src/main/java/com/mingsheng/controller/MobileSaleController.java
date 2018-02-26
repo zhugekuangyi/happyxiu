@@ -241,10 +241,10 @@ public class MobileSaleController {
 
     @RequestMapping(value = "getSaleList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JSONObject getList(){
+    public JSONObject getList(@RequestParam(value = "phone") String phone){
         List<Map<String,Object>> list=new ArrayList<>();
         try {
-            List<SaleOrder> orders = saleOrderService.getList();
+            List<SaleOrder> orders = saleOrderService.getList(phone);
             for (SaleOrder order:orders) {
                 Map<String,Object> map = new HashMap<>();
                 map.put("orderNo",order.getOrderNo());

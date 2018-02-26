@@ -27,7 +27,7 @@ public class RecoveryOrderService {
         return recoveryOrderMapper.getOrderById(orderId);
     }
 
-    public List<RecoveryOrder> getList() {
-      return  recoveryOrderMapper.getList();
+    public List<RecoveryOrder> getList(String phone) {
+      return  recoveryOrderMapper.getList(phone);
     }
 }
