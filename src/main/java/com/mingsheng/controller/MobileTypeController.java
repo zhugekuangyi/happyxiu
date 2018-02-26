@@ -123,20 +123,45 @@ public class MobileTypeController {
             if(mobileId==null || mobileId.trim().length()<=0){
                 return RespStatus.fail("手机厂商不能为空");
             }
+            MobileType info = mobileTypeService.getInfoById(mobileId);
             mobileTypeList = mobileTypeService.getListByPid(mobileId);
 
             for (MobileType mt:mobileTypeList) {
                 Map<String,Object> map = new HashMap<>();
-                map.put("mobileType","");
+                map.put("mobileType",info.getName());
+                map.put("mobileName",mt.getName());
+                map.put("id",mt.getId());
+                map.put("time",mt.getCtime().toString());
+                mapList.add(map);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.exception();
         }
 
-        return RespStatus.success().element("list",mobileTypeList);
+        return RespStatus.success().element("list",mapList);
 
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "saveMobileName",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject saveMobileName(@RequestParam(value = "mobileId") String mobileId,
+                                     @RequestParam(value = "mobileName") String mobileName){
+        try{
+
+
+        if(mobileId==null || mobileId==""){
+            return RespStatus.fail("mobileId不能为空");
+        }
+        if(mobileName==null ||mobileName==""){
+            return RespStatus.fail("mobileName不能为空");
+        }
+        mobileTypeService.saveMobile(1,mobileName,2,mobileId);
+        }catch (Exception e){
+            return RespStatus.fail("添加失败");
+        }
+        return RespStatus.success();
     }
 
 

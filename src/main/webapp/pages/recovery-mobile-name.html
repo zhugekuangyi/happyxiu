@@ -76,12 +76,13 @@
             type: 'POST',
 //            url :'http://39.106.27.66/mobileRecovery/getListNoPage',
 			data:{"mobileId":"3"},
-            url :'http://localhost:8080/mobile/getListByMobile',
+//            url :'http://39.106.27.66/mobile/getMobileName',
+            url :'http://localhost:8080/mobile/getMobileName',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
                     for(var index = 0,l = list.length;index<l;index++){
-                        $("#store").append("<tr class=\"text-c\"> <td>"+list[index].mobileType+"</td><td>"+list[index].name+"</td><td>"+list[index].time+"</td><td><input type=\"button\" onclick=\"del("+list[index].id+")\" value=\"删除\"/></td></tr>")
+                        $("#store").append("<tr class=\"text-c\"> <td>"+list[index].mobileType+"</td><td>"+list[index].mobileName+"</td><td>"+list[index].time+"</td><td><input type=\"button\" onclick=\"del("+list[index].id+")\" value=\"删除\"/></td></tr>")
                     }
                 }else {
                     alert("获取列表失败");
@@ -125,6 +126,23 @@
             });
         });
     }
+
+    function save() {
+        var mobileType = $('#name').val();
+        $.ajax({
+            type: 'POST',
+            data:{'mobileType':mobileType,'status':1},
+            url :'http://39.106.27.66/mobile/saveMobileType',
+//            url :'http://localhost:8080/mobile/saveMobileType',
+            success:function(data){
+                if(data.return_code==0){
+                    window.location.href="recovery-mobile-name.html";
+                }else {
+                    alert(data.return_msg);
+                }
+            }
+        })
+    };
 
 </script>
 </body>
