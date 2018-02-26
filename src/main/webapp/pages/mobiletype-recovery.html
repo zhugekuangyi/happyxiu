@@ -20,20 +20,20 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 
-<title>订单列表</title>
+<title>回收手机品牌管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 商城订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 手机管理 <span class="c-gray en">&gt;</span> 回收手机品牌管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 	<div class="text-c">
-	<input type="text" class="input-text" style="width:250px" placeholder="输入手机厂商" id="name" name="name">
-	<input type="button" class="btn btn-success radius" id="search" name="save" value="添加厂商" onclick="save()"><i class="Hui-iconfont"></i></input>
+	<input type="text" class="input-text" style="width:250px" placeholder="输入手机品牌" id="name" name="name">
+	<input type="button" class="btn btn-success radius" id="search" name="save" value="添加品牌" onclick="save()"><i class="Hui-iconfont"></i></input>
 	</div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="50">手机厂商</th>
+					<th width="50">手机品牌</th>
 					<th width="60">创建时间</th>
 					<th width="100">操作</th>
 				</tr>
@@ -58,8 +58,8 @@
     window.onload=function(){
         $.ajax({
             type: 'POST',
-//            url :'http://39.106.27.66/mobile/getList?status=1',
-            url :'http://localhost:8080/mobile/getList?status=1',
+            url :'http://39.106.27.66/mobile/getList?status=1',
+//            url :'http://localhost:8080/mobile/getList?status=1',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
@@ -78,8 +78,8 @@
         $.ajax({
             type: 'POST',
 			data:{'mobileType':mobileType,'status':1},
-//            url :'http://39.106.27.66/mobile/saveMobileType',
-            url :'http://localhost:8080/mobile/saveMobileType',
+            url :'http://39.106.27.66/mobile/saveMobileType',
+//            url :'http://localhost:8080/mobile/saveMobileType',
             success:function(data){
                 if(data.return_code==0){
                     window.location.href="mobiletype-recovery.html";
@@ -94,8 +94,8 @@
         layer.confirm('确认要删除吗？', function (index) {
             $.ajax({
                 type: 'GET',
-//                url: 'http://39.106.27.66/mobile/del?id=' + id,
-                url: 'http://localhost:8080/mobile/del?id='+id,
+                url: 'http://39.106.27.66/mobile/del?id=' + id,
+//                url: 'http://localhost:8080/mobile/del?id='+id,
                 dataType: 'json',
                 success: function (data) {
                     layer.msg('已删除!', {icon: 1, time: 1000});
