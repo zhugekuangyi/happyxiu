@@ -96,7 +96,39 @@ public class MobileTypeController {
             if(mobileId==null || mobileId.trim().length()<=0){
                 return RespStatus.fail("手机厂商不能为空");
             }
-           mobileTypeList = mobileTypeService.getListByPid(mobileId);
+            mobileTypeList = mobileTypeService.getListByPid(mobileId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RespStatus.exception();
+        }
+
+        return RespStatus.success().element("list",mobileTypeList);
+
+
+    }
+
+
+    /**
+     * 获取手机具体型号
+     * @param mobileId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getMobileName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getMobileName(String mobileId){
+
+        List<MobileType> mobileTypeList = null;
+        List<Map<String,Object>> mapList = new ArrayList<>();
+        try {
+            if(mobileId==null || mobileId.trim().length()<=0){
+                return RespStatus.fail("手机厂商不能为空");
+            }
+            mobileTypeList = mobileTypeService.getListByPid(mobileId);
+
+            for (MobileType mt:mobileTypeList) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("mobileType","");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return RespStatus.exception();
