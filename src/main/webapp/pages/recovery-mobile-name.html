@@ -76,8 +76,8 @@
             type: 'POST',
 //            url :'http://39.106.27.66/mobileRecovery/getListNoPage',
 			data:{"mobileId":"3"},
-//            url :'http://39.106.27.66/mobile/getMobileName',
-            url :'http://localhost:8080/mobile/getMobileName',
+            url :'http://39.106.27.66/mobile/getMobileName',
+//            url :'http://localhost:8080/mobile/getMobileName',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
@@ -92,8 +92,8 @@
 
         $.ajax({
             type: 'POST',
-//            url :'http://39.106.27.66/mobile/getList?status=1',
-            url :'http://localhost:8080/mobile/getList?status=1',
+            url :'http://39.106.27.66/mobile/getList?status=1',
+//            url :'http://localhost:8080/mobile/getList?status=1',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
@@ -111,8 +111,8 @@
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'GET',
-//                url: 'http://39.106.27.66/mobileRecovery/del?id='+id,
-                url: 'http://localhost:8080/mobile/del?id='+id,
+                url: 'http://39.106.27.66/mobile/del?id='+id,
+//                url: 'http://localhost:8080/mobile/del?id='+id,
                 dataType: 'json',
                 success: function(data){
                     layer.msg('已删除!',{icon:1,time:1000});
@@ -134,8 +134,8 @@
         $.ajax({
             type: 'POST',
             data:{'mobileName':mobileType,'mobileId':mobileId},
-//            url :'http://39.106.27.66/mobile/saveMobileType',
-            url :'http://localhost:8080/mobile/saveMobileName',
+            url :'http://39.106.27.66/mobile/saveMobileName',
+//            url :'http://localhost:8080/mobile/saveMobileName',
             success:function(data){
                 if(data.return_code==0){
                     window.location.href="recovery-mobile-name.html";
