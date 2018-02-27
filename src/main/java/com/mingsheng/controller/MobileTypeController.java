@@ -241,7 +241,7 @@ public class MobileTypeController {
     public JSONObject del(String id){
 
         try {
-            if(id==null){
+            if(id==null || id==""){
                 return RespStatus.fail("传入的ID不能为空");
             }
             mobileTypeService.del(id);

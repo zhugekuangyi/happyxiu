@@ -7,10 +7,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          id="schedule-console" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring-*.xml</param-value>
-  </context-param>
+
   <context-param>
     <!-- 日志配置路径 -->
     <param-name>log4jConfigLocation</param-name>
@@ -22,6 +19,11 @@
       org.springframework.web.util.Log4jConfigListener
     </listener-class>
   </listener>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring-*.xml</param-value>
+  </context-param>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
