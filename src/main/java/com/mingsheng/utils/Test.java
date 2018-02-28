@@ -11,17 +11,11 @@ public class Test {
 
     public static void main(String[] args) {
 
-            int intFlag = (int)(Math.random() * 1000000);
+        String id = MathUtil.getId();
+        while (Integer.parseInt(id)<666666){
+            id=MathUtil.getId();
+        }
 
-            String flag = String.valueOf(intFlag);
-            if (flag.length() == 6 && flag.substring(0, 1).equals("9"))
-            {
-                System.out.println(intFlag);
-            }
-            else
-            {
-                intFlag = intFlag + 100000;
-                System.out.println(intFlag);
-            }
+        System.out.println(id);
     }
 }

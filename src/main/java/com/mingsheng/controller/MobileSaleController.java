@@ -206,7 +206,12 @@ public class MobileSaleController {
             return RespStatus.fail("价格不能空");
         }
         MobileSale mobileSale = new MobileSale();
-        mobileSale.setId(MathUtil.getId());
+        String id = MathUtil.getId();
+            MobileSale infoById = mobileSaleService.getInfoById(id);
+            while(infoById!=null){
+                id=MathUtil.getId();
+            }
+            mobileSale.setId(id);
         mobileSale.setMobileColour(mobileColour);
         mobileSale.setMobileName(mobileName);
         mobileSale.setMobileType(mobileType);

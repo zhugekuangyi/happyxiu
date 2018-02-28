@@ -42,6 +42,10 @@ public class MobileTypeService {
 
     public void saveMobile(Integer status, String mobileType, Integer i,String pid) {
         String id = MathUtil.getId();
+        MobileType infoById = mobileTypeMapper.getInfoById(id);
+        while (infoById!=null){
+            id=MathUtil.getId();
+        }
         Timestamp time = new Timestamp(System.currentTimeMillis());
         MobileType mt = new MobileType();
         mt.setId(id);

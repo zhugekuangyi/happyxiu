@@ -212,8 +212,17 @@ public class MobileRecoveryController {
             if(price==null || price.trim().length()<=0){
                 return RespStatus.fail("价格不能空");
             }
+            MobileRecovery info = mobileRecoveryService.getInfo(mobileType, mobileName);
+            if(info!=null){
+                return RespStatus.fail("该商品已添加，请勿重复添加！");
+            }
             MobileRecovery mobileRecovery = new MobileRecovery();
-            mobileRecovery.setId(MathUtil.getId());
+            String id = MathUtil.getId();
+            MobileRecovery infoById = mobileRecoveryService.getInfoById(id);
+            while(infoById!=null){
+                id=MathUtil.getId();
+            }
+            mobileRecovery.setId(id);
             mobileRecovery.setMobileName(mobileName);
             mobileRecovery.setMobileType(mobileType);
             mobileRecovery.setCtime(new Timestamp(System.currentTimeMillis()));
