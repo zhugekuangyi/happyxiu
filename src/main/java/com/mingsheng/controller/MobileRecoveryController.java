@@ -36,6 +36,8 @@ public class MobileRecoveryController {
     private MobileTypeService mobileTypeService;
     @Autowired
     private CodeService codeService;
+    @Autowired
+    private PhoneService phoneService;
 
 
     /**
@@ -140,7 +142,12 @@ public class MobileRecoveryController {
                 order.setRemark(remark);
             }
             recoveryOrderService.insert(order);
-            SmsUtils.veriOrder("13685753795",phone,userAddress.getAddress(),"回收",mobileType.getName()+"/"+mobileName.getName());
+
+            String phone1 = phoneService.getPhone("3");
+            if(phone1==null || phone1 ==""){
+                phone1="13685753795";
+            }
+            SmsUtils.veriOrder(phone1,phone,userAddress.getAddress(),"回收",mobileType.getName()+"/"+mobileName.getName());
             return RespStatus.success();
         } catch (Exception e) {
             e.printStackTrace();

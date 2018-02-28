@@ -43,6 +43,8 @@ public class MobileRepairController {
     private CodeService codeService;
     @Autowired
     private QuestionOrderService questionOrderService;
+    @Autowired
+    private PhoneService phoneService;
 
 
     @ResponseBody
@@ -148,7 +150,12 @@ public class MobileRepairController {
                 order.setRemark(remark);
             }
             orderService.insert(order);
-            SmsUtils.veriOrder("13685753795",phone,userAddress.getAddress(),"维修",mobileType.getName()+"/"+mobileName.getName()+"/"+mobileColour.getName());
+
+            String phone1 = phoneService.getPhone("3");
+            if(phone1==null || phone1 ==""){
+                phone1="13685753795";
+            }
+            SmsUtils.veriOrder(phone1,phone,userAddress.getAddress(),"维修",mobileType.getName()+"/"+mobileName.getName()+"/"+mobileColour.getName());
 
         return RespStatus.success();
 

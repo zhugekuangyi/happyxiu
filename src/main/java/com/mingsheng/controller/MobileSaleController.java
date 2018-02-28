@@ -34,6 +34,8 @@ public class MobileSaleController {
     private SaleOrderService saleOrderService;
     @Autowired
     private CodeService codeService;
+    @Autowired
+    private PhoneService phoneService;
 
     @ResponseBody
     @RequestMapping(value = "getList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -130,7 +132,11 @@ public class MobileSaleController {
             }
 
             saleOrderService.insert(order);
-            SmsUtils.veriOrder("13685753795",phone,userAddress.getAddress(),"维修",mobileSale.getMobileType()+"/"+mobileSale.getMobileName()+"/"+mobileSale.getMobileColour()+"/"+mobileSale.getMobileMemory());
+            String phone1 = phoneService.getPhone("3");
+            if(phone1==null || phone1 ==""){
+                phone1="13685753795";
+            }
+            SmsUtils.veriOrder(phone1,phone,userAddress.getAddress(),"维修",mobileSale.getMobileType()+"/"+mobileSale.getMobileName()+"/"+mobileSale.getMobileColour()+"/"+mobileSale.getMobileMemory());
 
             return RespStatus.success();
         } catch (Exception e) {

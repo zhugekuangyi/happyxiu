@@ -4,4 +4,12 @@
     <select id="getPhone" parameterType="String" resultType="String">
         SELECT phone from phone where id=#{id}
     </select>
+
+    <select id="getPhoneList" resultType="com.mingsheng.model.Phone">
+        SELECT * from phone;
+    </select>
+
+    <update id="updatePhone" >
+        UPDATE phone set phone=#{phone} where id=#{id};
+    </update>
 </mapper>
