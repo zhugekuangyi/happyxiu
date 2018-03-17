@@ -14,7 +14,7 @@ public class MobileSale {
 
     private Timestamp ctime;
 
-    private Double price;
+    private String price;
 
     private String mobileMemory;
 
@@ -60,11 +60,11 @@ public class MobileSale {
         this.ctime = ctime;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -83,4 +83,5 @@ public class MobileSale {
     public void setMobileColour(String mobileColour) {
         this.mobileColour = mobileColour;
     }
+
 }

@@ -223,7 +223,7 @@ public class MobileSaleController {
         mobileSale.setMobileType(mobileType);
         mobileSale.setMobileMemory(mobileMemory);
         mobileSale.setCtime(new Timestamp(System.currentTimeMillis()));
-        mobileSale.setPrice(Double.parseDouble(price));
+        mobileSale.setPrice(price);
 
         Map<String, String> map = OSSUtil.baseToFile(img);
         if("0".equals(map.get("code"))){

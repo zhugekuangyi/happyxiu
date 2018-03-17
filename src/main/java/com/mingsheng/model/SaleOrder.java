@@ -28,7 +28,7 @@ public class SaleOrder {
 
     private String mobileColour;
 
-    private Double price;
+    private String price;
 
     private String name;
 
@@ -138,12 +138,12 @@ public class SaleOrder {
         this.mobileColour = mobileColour;
     }
 
-    public Double getPrice() {
-        return price;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public String getPrice() {
+        return price;
     }
 
     public String getName() {
