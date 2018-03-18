@@ -67,7 +67,7 @@ public class MobileRepairController {
 
     @ResponseBody
     @RequestMapping(value = "getResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getQuestionResult(HttpServletRequest request,HttpServletResponse response,String questionId){
+    public JSONObject getQuestionResult(HttpServletRequest request,HttpServletResponse response,String questionId,String mobileId){
         try {
            Question question = questionService.selectResultById(questionId);
             return RespStatus.success().element("data",question);
