@@ -45,6 +45,8 @@ public class MobileRepairController {
     private QuestionOrderService questionOrderService;
     @Autowired
     private PhoneService phoneService;
+    @Autowired
+    private RepairResultService repairResultService;
 
 
     @ResponseBody
@@ -70,7 +72,11 @@ public class MobileRepairController {
     public JSONObject getQuestionResult(HttpServletRequest request,HttpServletResponse response,String questionId,String mobileId){
         try {
            Question question = questionService.selectResultById(questionId);
-            return RespStatus.success().element("data",question);
+           if(questionId=="" || questionId==null){
+               return RespStatus.fail("维修问题不能为空");
+           }
+            RepairResult result = repairResultService.getResultById(questionId,mobileId);
+            return RespStatus.success().element("data",result);
         } catch (Exception e) {
             e.printStackTrace();
 

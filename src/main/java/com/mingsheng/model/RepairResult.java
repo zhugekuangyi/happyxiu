@@ -11,7 +11,7 @@ public class RepairResult implements Serializable{
 
     private String mobileId;
 
-    private String result;
+    private String questionResult;
 
     private String price;
 
@@ -45,12 +45,12 @@ public class RepairResult implements Serializable{
         this.mobileId = mobileId;
     }
 
-    public String getResult() {
-        return result;
+    public String getQuestionResult() {
+        return questionResult;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setQuestionResult(String questionResult) {
+        this.questionResult = questionResult;
     }
 
     public String getPrice() {
