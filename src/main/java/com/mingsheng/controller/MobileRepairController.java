@@ -69,12 +69,31 @@ public class MobileRepairController {
 
     @ResponseBody
     @RequestMapping(value = "getResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getQuestionResult(HttpServletRequest request,HttpServletResponse response,String questionId,String mobileId){
+    public JSONObject getQuestionResult(HttpServletRequest request,HttpServletResponse response,String questionId){
         try {
+            if(questionId=="" || questionId==null){
+                return RespStatus.fail("维修问题不能为空");
+            }
            Question question = questionService.selectResultById(questionId);
-           if(questionId=="" || questionId==null){
-               return RespStatus.fail("维修问题不能为空");
-           }
+
+            return RespStatus.success().element("data",question);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return RespStatus.fail("获取方案错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getQuesdtionResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getQuesdtionResult(HttpServletRequest request,HttpServletResponse response,String questionId,String mobileId){
+        try {
+            if(questionId=="" || questionId==null){
+                return RespStatus.fail("维修问题不能为空");
+            }
+            if(mobileId=="" || mobileId==null){
+                return RespStatus.fail("手机型号不能为空");
+            }
             RepairResult result = repairResultService.getResultById(questionId,mobileId);
             return RespStatus.success().element("data",result);
         } catch (Exception e) {
