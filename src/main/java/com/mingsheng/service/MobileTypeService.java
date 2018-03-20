@@ -56,4 +56,12 @@ public class MobileTypeService {
         mt.setStatus(status);
         mobileTypeMapper.insert(mt);
     }
+
+    public String getInfo(String mobileId) {
+        MobileType infoById = mobileTypeMapper.getInfoById(mobileId);
+        MobileType infoById1 = mobileTypeMapper.getInfoById(infoById.getPid());
+        MobileType infoById2 = mobileTypeMapper.getInfoById(infoById1.getPid());
+        String mobile = infoById2.getName()+"/"+infoById1.getName()+"/"+infoById.getName();
+        return mobile;
+    }
 }

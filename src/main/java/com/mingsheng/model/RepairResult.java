@@ -21,6 +21,8 @@ public class RepairResult implements Serializable{
 
     private String description;
 
+    private String questionType;
+
     public Integer getId() {
         return id;
     }
@@ -84,4 +86,13 @@ public class RepairResult implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
+    }
 }
+

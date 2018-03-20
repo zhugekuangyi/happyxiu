@@ -56,7 +56,7 @@ public class MobileSaleController {
     @ResponseBody
     @RequestMapping(value = "getListNoPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response){
-        List list =null;
+        List<RepairResult> list =null;
         try {
             list = mobileSaleService.ListNoPage();
             return RespStatus.success().element("list",list);

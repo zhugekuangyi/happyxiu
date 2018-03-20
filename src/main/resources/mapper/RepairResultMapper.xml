@@ -4,4 +4,14 @@
     <select id="getResultById" resultType="com.mingsheng.model.RepairResult">
         SELECT * from repairResult where questionId=#{questionId} and mobileId=#{mobileId}
     </select>
+
+    <select id="getListNoPage" resultType="com.mingsheng.model.RepairResult">
+        SELECT * from repairResult where questionType=#{questionType};
+    </select>
+
+    <update id="update" parameterType="String">
+        update repairResult
+        set questionResult=#{result},price=#{price}
+        where id=#{id}
+    </update>
 </mapper>

@@ -50,6 +50,65 @@ public class MobileRepairController {
 
 
     @ResponseBody
+    @RequestMapping(value = "getListNoPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response,String questionType){
+        List<RepairResult> list =null;
+
+        try {
+            list = repairResultService.ListNoPage(questionType);
+            List<Map<String,Object>> mapList = new ArrayList<>();
+            for (RepairResult r: list) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("id",r.getId());
+                String question = "";
+                if(r.getQuestionType()=="1"){
+                    question="屏幕问题";
+                }else if(r.getQuestionType()=="2"){
+                    question="外壳问题";
+                }else if(r.getQuestionType()=="3"){
+                    question="电池问题";
+                }else if(r.getQuestionType()=="4"){
+                    question="声音问题";
+                }else if(r.getQuestionType()=="5"){
+                    question="按键问题";
+                }else if(r.getQuestionType()=="6"){
+                    question="摄像拍照";
+                }else if(r.getQuestionType()=="7"){
+                    question="内存神经";
+                }else {
+                    question="其他问题";
+                }
+                map.put("question",question+"/"+r.getDescription());
+                map.put("result",r.getQuestionResult());
+                map.put("price",r.getPrice());
+                String mobile = mobileTypeService.getInfo(r.getMobileId());
+                map.put("mobile",mobile);
+                mapList.add(map);
+            }
+            return RespStatus.success().element("list",mapList);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return RespStatus.fail("获取列表失败");
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject updateResult(HttpServletRequest request, HttpServletResponse response,Integer id,String result,String price){
+            if(id==null){
+                return RespStatus.fail("id不能为空");
+            }
+            try {
+                repairResultService.update(result,price,id);
+            }catch (Exception e){
+                return RespStatus.fail("修改失败");
+            }
+        return RespStatus.success();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "getQuestionByType", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getList(HttpServletRequest request, HttpServletResponse response,Integer type){
         try {
@@ -85,7 +144,7 @@ public class MobileRepairController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "getQuesdtionResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "getQuestionResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getQuesdtionResult(HttpServletRequest request,HttpServletResponse response,String questionId,String mobileId){
         try {
             if(questionId=="" || questionId==null){
