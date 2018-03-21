@@ -225,9 +225,9 @@ public class MobileRepairController {
             order.setPhone(phone);
             order.setUserId(user.getId());
             order.setQuestionId(questionId);
-            Question question = questionService.selectResultById(questionId);
+            RepairResult question = repairResultService.getResultById(questionId,mobileColour.getId());
             order.setQuestionResult(question.getQuestionResult());
-            order.setPrice(question.getPrice());
+            order.setPrice(Double.parseDouble(question.getPrice()));
             if(remark==null || remark.length()<=0){
                 order.setRemark("");
             }else {
