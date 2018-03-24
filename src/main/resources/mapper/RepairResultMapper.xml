@@ -9,9 +9,15 @@
         SELECT * from repairResult where questionType=#{questionType};
     </select>
 
-    <update id="update" parameterType="String">
+    <update id="updateResult">
         update repairResult
-        set questionResult=#{result},price=#{price}
+        set questionResult=#{result}
+        where id=#{id}
+    </update>
+
+    <update id="updatePrice">
+        update repairResult
+        set price=#{price}
         where id=#{id}
     </update>
 </mapper>

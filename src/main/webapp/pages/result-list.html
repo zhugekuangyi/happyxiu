@@ -30,28 +30,32 @@
 <div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
 				<select id="mobileType" name="mobileType" class="select">
-					<!--<option value="0">苹果</option>-->
-					<!--<option value="1">三星</option>-->
-					<!--<option value="11">华为</option>-->
-					<!--<option value="12"></option>-->
-					<!--<option value="13"></option>-->
+					<option value="1">屏幕问题</option>
+					<option value="2">外壳问题</option>
+					<option value="3">电池问题</option>
+					<option value="4">声音问题</option>
+					<option value="5">按键问题</option>
+					<option value="6">摄像拍照</option>
+					<option value="7">内存神经</option>
+					<option value="8">其他问题</option>
 				</select>
 				</span>
 </div>
+<input type="button" class="btn btn-success radius" id="search" name="search" value="切换" onclick="search()"><i class="Hui-iconfont"></i></input>
 <div class="page-container">
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="50">名称</th>
-					<th width="50">手机号</th>
-					<th width="30">操作</th>
+					<th width="50">ID</th>
+					<th width="50">问题</th>
+					<th width="50">手机型号</th>
+					<th width="50">处理方案</th>
+					<th width="50">价格</th>
+					<th width="50">操作</th>
 				</tr>
 			</thead>
 			<tbody id="repair-list">
-			<tr class="text-c"><td>一键下单电话</td><td><input class="phone" id="p1" type="text" value=""></td><td><input type="button" onclick="updateP1()" value="修改"></td></tr>
-			<tr class="text-c"><td>客服电话</td><td><input class="phone" id="p2" type="text" value=""></td><td><input type="button" onclick="updateP2()" value="修改"></td></tr>
-			<tr class="text-c"><td>下单通知电话</td><td><input class="phone"  id="p3" type="text" value=""></td><td><input type="button" onclick="updateP3()" value="修改"></td></tr>
 			</tbody>
 		</table>
 	</div>
@@ -98,6 +102,23 @@
         });
 
         $.ajax({
+            type: 'POST',
+			data:{'questionType':'1'},
+//            url :'http://39.106.27.66/mobileRepair/getListNoPage',
+            url :'http://localhost:8080/mobileRepair/getListNoPage',
+            success:function(data){
+                if(data.return_code==0){
+                    var list = data.list;
+                    for(var index = 0,l = list.length;index<l;index++){
+                        $("#repair-list").append("<tr class=\"text-c\"> <td>"+list[index].id+"</td><td>"+list[index].question+"</td><td>"+list[index].mobile+"</td><td>"+list[index].result+"</td><td>"+list[index].price+"</td><td><input type=\"button\" onclick=\"update("+list[index].id+")\" value=\"修改处理方案\"/>&nbsp;&nbsp;<input type=\"button\" onclick=\"updatePrice("+list[index].id+")\" value=\"修改价格\"/></td></tr>")
+                    }
+
+                }else {
+                    alert("获取列表失败");
+                }
+            }
+        });
+        $.ajax({
             type: 'GET',
             url :'http://39.106.27.66/phone/getxdPhone',
 //            url :'http://localhost:8080/phone/getxdPhone',
@@ -111,59 +132,72 @@
             }
         });
     };
-    function updateP1() {
-        var phone=$("#p1").val();
+
+    function search() {
+        var options=$("#mobileType option:selected");
+        var questionType = options.val();
+        $("#repair-list").empty();
         $.ajax({
             type: 'POST',
-            data:{'phone':phone,'id':"1"},
-            url :'http://39.106.27.66/phone/updatePhone',
-//            url :'http://localhost:8080/phone/updatePhone',
+            data:{'questionType':questionType},
+            url :'http://39.106.27.66/mobileRepair/getListNoPage',
+//            url :'http://localhost:8080/mobileRepair/getListNoPage',
             success:function(data){
                 if(data.return_code==0){
-                    window.location.href="phone-list.html";
+                    var list = data.list;
+                    for(var index = 0,l = list.length;index<l;index++){
+                        $("#repair-list").append("<tr class=\"text-c\"> <td>"+list[index].id+"</td><td>"+list[index].question+"</td><td>"+list[index].mobile+"</td><td>"+list[index].result+"</td><td>"+list[index].price+"</td><td><input type=\"button\" onclick=\"update("+list[index].id+")\" value=\"修改\"/></td></tr>")
+                    }
+
+                }else {
+                    alert("获取列表失败");
+                }
+            }
+        });
+    }
+    function update(data) {
+        var str=prompt("解决方案","");
+        if(str)
+        {
+            $.ajax({
+            type: 'POST',
+            data:{'id':data,'result':str},
+//            url :'http://39.106.27.66/phone/updatePhone',
+            url :'http://localhost:8080/mobileRepair/updateResult',
+            success:function(data){
+                if(data.return_code==0){
+                    window.location.href="result-list.html";
                 }else {
                     alert(data.return_msg);
-                    window.location.href="phone-list.html";
+                    window.location.href="result-listt.html";
                 }
             }
         })
-    };
-    function updateP2() {
-        var phone=$("#p2").val();
-        $.ajax({
-            type: 'POST',
-            data:{'phone':phone,'id':"2"},
-            url :'http://39.106.27.66/phone/updatePhone',
-//            url :'http://localhost:8080/phone/updatePhone',
-            success:function(data){
-                if(data.return_code==0){
-                    window.location.href="phone-list.html";
-                }else {
-                    alert(data.return_msg);
-                    window.location.href="phone-list.html";
-                }
-            }
-        })
-    };
-    function updateP3() {
-        var phone=$("#p3").val();
-        $.ajax({
-            type: 'POST',
-            data:{'phone':phone,'id':"3"},
-            url :'http://39.106.27.66/phone/updatePhone',
-//            url :'http://localhost:8080/phone/updatePhone',
-            success:function(data){
-                if(data.return_code==0){
-                    window.location.href="phone-list.html";
-                }else {
-                    alert(data.return_msg);
-                    window.location.href="phone-list.html";
-                }
-            }
-        })
+        }
+//
     };
 
-
+    function updatePrice(data) {
+        var str=prompt("价格","");
+        if(str)
+        {
+            $.ajax({
+                type: 'POST',
+                data:{'id':data,'price':str},
+//            url :'http://39.106.27.66/phone/updatePhone',
+                url :'http://localhost:8080/mobileRepair/updatePrice',
+                success:function(data){
+                    if(data.return_code==0){
+                        window.location.href="result-list.html";
+                    }else {
+                        alert(data.return_msg);
+                        window.location.href="result-list.html";
+                    }
+                }
+            })
+        }
+//
+    }
 
 
 

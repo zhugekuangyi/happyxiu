@@ -51,7 +51,7 @@ public class MobileRepairController {
 
     @ResponseBody
     @RequestMapping(value = "getListNoPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response,String questionType){
+    public JSONObject getListNoPage(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "questionType") String questionType){
         List<RepairResult> list =null;
 
         try {
@@ -61,19 +61,19 @@ public class MobileRepairController {
                 Map<String,Object> map = new HashMap<>();
                 map.put("id",r.getId());
                 String question = "";
-                if(r.getQuestionType()=="1"){
+                if("1".equals(r.getQuestionType())){
                     question="屏幕问题";
-                }else if(r.getQuestionType()=="2"){
+                }else if("1".equals(r.getQuestionType())){
                     question="外壳问题";
-                }else if(r.getQuestionType()=="3"){
+                }else if("2".equals(r.getQuestionType())){
                     question="电池问题";
-                }else if(r.getQuestionType()=="4"){
+                }else if("3".equals(r.getQuestionType())){
                     question="声音问题";
-                }else if(r.getQuestionType()=="5"){
+                }else if("4".equals(r.getQuestionType())){
                     question="按键问题";
-                }else if(r.getQuestionType()=="6"){
+                }else if("5".equals(r.getQuestionType())){
                     question="摄像拍照";
-                }else if(r.getQuestionType()=="7"){
+                }else if("6".equals(r.getQuestionType())){
                     question="内存神经";
                 }else {
                     question="其他问题";
@@ -96,15 +96,30 @@ public class MobileRepairController {
 
     @ResponseBody
     @RequestMapping(value = "updateResult", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject updateResult(HttpServletRequest request, HttpServletResponse response,Integer id,String result,String price){
+    public JSONObject updateResult(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "id") Integer id,@RequestParam(value = "result") String result){
             if(id==null){
                 return RespStatus.fail("id不能为空");
             }
             try {
-                repairResultService.update(result,price,id);
+                repairResultService.updateResult(result,id);
             }catch (Exception e){
                 return RespStatus.fail("修改失败");
             }
+        return RespStatus.success();
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "updatePrice", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public JSONObject updatePrice(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "id")Integer id,@RequestParam(value = "price")String price){
+        if(id==null){
+            return RespStatus.fail("id不能为空");
+        }
+        try {
+            repairResultService.updatePrice(price,id);
+        }catch (Exception e){
+            return RespStatus.fail("修改失败");
+        }
         return RespStatus.success();
     }
 

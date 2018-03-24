@@ -14,7 +14,8 @@ public interface RepairResultMapper {
 
     List<RepairResult> getListNoPage(@Param(value = "questionType") String questionType);
 
-    void update(@Param(value = "result") String result,
-                @Param(value = "price") String price,
+    void updatePrice(@Param(value = "price") String price,
                 @Param(value = "id") Integer id);
+
+    void updateResult(@Param(value = "result")String result, @Param(value = "id")Integer id);
 }

@@ -22,7 +22,11 @@ public class RepairResultService {
         return mapper.getListNoPage(questionType);
     }
 
-    public void update(String result, String price, Integer id) {
-        mapper.update(result,price,id);
+    public void updatePrice(String price, Integer id) {
+        mapper.updatePrice(price,id);
+    }
+
+    public void updateResult(String result, Integer id) {
+        mapper.updateResult(result,id);
     }
 }
