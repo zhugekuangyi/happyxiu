@@ -20,10 +20,10 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 
-<title>订单列表</title>
+<title>维修方案列表</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 回收订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 维修方案管理 <span class="c-gray en">&gt;</span> 维修方案列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 
 <br>
 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>问题类型：</label>
@@ -104,8 +104,8 @@
         $.ajax({
             type: 'POST',
 			data:{'questionType':'1'},
-//            url :'http://39.106.27.66/mobileRepair/getListNoPage',
-            url :'http://localhost:8080/mobileRepair/getListNoPage',
+            url :'http://39.106.27.66/mobileRepair/getListNoPage',
+//            url :'http://localhost:8080/mobileRepair/getListNoPage',
             success:function(data){
                 if(data.return_code==0){
                     var list = data.list;
@@ -162,8 +162,8 @@
             $.ajax({
             type: 'POST',
             data:{'id':data,'result':str},
-//            url :'http://39.106.27.66/phone/updatePhone',
-            url :'http://localhost:8080/mobileRepair/updateResult',
+            url :'http://39.106.27.66/mobileRepair/updateResult',
+//            url :'http://localhost:8080/mobileRepair/updateResult',
             success:function(data){
                 if(data.return_code==0){
                     window.location.href="result-list.html";
@@ -184,8 +184,8 @@
             $.ajax({
                 type: 'POST',
                 data:{'id':data,'price':str},
-//            url :'http://39.106.27.66/phone/updatePhone',
-                url :'http://localhost:8080/mobileRepair/updatePrice',
+            url :'http://39.106.27.66/mobileRepair/updatePrice',
+//                url :'http://localhost:8080/mobileRepair/updatePrice',
                 success:function(data){
                     if(data.return_code==0){
                         window.location.href="result-list.html";
